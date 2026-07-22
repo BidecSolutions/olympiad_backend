@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\Auth\LogoutController;
 use App\Http\Controllers\Api\V1\Auth\PasswordController;
 use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
+use App\Http\Controllers\Api\V1\SchoolController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -60,5 +61,24 @@ Route::prefix('v1')->group(function () {
     // ========================================
     // [ School ]
     // ========================================
+    Route::middleware('auth:sanctum')
+        ->prefix('schools')
+        ->controller(SchoolController::class)
+        ->group(function () {
 
+            Route::get('/', 'index')
+                ->name('api.v1.schools.index');
+
+            Route::post('/', 'store')
+                ->name('api.v1.schools.store');
+
+            Route::get('/{school}', 'show')
+                ->name('api.v1.schools.show');
+
+            Route::patch('/{school}', 'update')
+                ->name('api.v1.schools.patch');
+
+            Route::delete('/{school}', 'destroy')
+                ->name('api.v1.schools.destroy');
+        });
 });
