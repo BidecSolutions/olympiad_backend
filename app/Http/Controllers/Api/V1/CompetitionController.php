@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\CompetitionCategoryStatusEnum;
 use App\Enums\CompetitionStatusEnum;
 use App\Enums\ScoringTypeEnum;
 use App\Http\Controllers\Controller;
@@ -91,6 +92,18 @@ class CompetitionController extends Controller
             'description' => ['nullable', 'string'],
             'scoring_type' => ['nullable', Rule::enum(ScoringTypeEnum::class)],
             'status' => ['nullable', Rule::enum(CompetitionStatusEnum::class)],
+            'categories' => ['nullable', 'array'],
+            'categories.*.id' => [
+                'nullable',
+                'integer',
+                $competitionId
+                    ? Rule::exists('competition_categories', 'id')->where('competition_id', $competitionId)
+                    : 'prohibited',
+            ],
+            'categories.*.name' => ['required', 'string', 'max:255'],
+            'categories.*.min_age' => ['required', 'integer', 'min:0', 'max:150'],
+            'categories.*.max_age' => ['required', 'integer', 'min:0', 'max:150', 'gte:categories.*.min_age'],
+            'categories.*.status' => ['nullable', Rule::enum(CompetitionCategoryStatusEnum::class)],
         ];
     }
 }

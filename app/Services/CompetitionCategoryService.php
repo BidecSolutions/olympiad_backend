@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\CompetitionCategoryStatusEnum;
 use App\Models\Competition;
 use App\Models\CompetitionCategory;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -53,5 +54,42 @@ class CompetitionCategoryService
     public function delete(CompetitionCategory $competitionCategory): void
     {
         $competitionCategory->delete();
+    }
+
+    /**
+     * @param  list<array<string, mixed>>  $categories
+     */
+    public function syncForCompetition(Competition $competition, array $categories): void
+    {
+        $categoryIds = [];
+
+        foreach ($categories as $categoryData) {
+            if (! empty($categoryData['id'])) {
+                $category = $competition->categories()->findOrFail($categoryData['id']);
+                $category->update([
+                    'name' => $categoryData['name'],
+                    'min_age' => $categoryData['min_age'],
+                    'max_age' => $categoryData['max_age'],
+                    'status' => $categoryData['status'] ?? $category->status,
+                ]);
+                $categoryIds[] = $category->id;
+            } else {
+                $category = $competition->categories()->create([
+                    'name' => $categoryData['name'],
+                    'min_age' => $categoryData['min_age'],
+                    'max_age' => $categoryData['max_age'],
+                    'status' => $categoryData['status'] ?? CompetitionCategoryStatusEnum::Active,
+                ]);
+                $categoryIds[] = $category->id;
+            }
+        }
+
+        if ($categoryIds === []) {
+            $competition->categories()->delete();
+
+            return;
+        }
+
+        $competition->categories()->whereNotIn('id', $categoryIds)->delete();
     }
 }
