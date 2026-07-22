@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\V1\CompetitionController;
 use App\Http\Controllers\Api\V1\CompetitionTypeController;
 use App\Http\Controllers\Api\V1\EventController;
 use App\Http\Controllers\Api\V1\ParticipationTypeController;
+use App\Http\Controllers\Api\V1\RegistrationController;
 use App\Http\Controllers\Api\V1\SchoolController;
 use App\Http\Controllers\Api\V1\StudentController;
 use App\Http\Controllers\Api\V1\TeamController;
@@ -291,6 +292,26 @@ Route::prefix('v1')->group(function () {
                             Route::delete('/{teamMember}', 'destroy')
                                 ->name('api.v1.schools.teams.members.destroy');
                         });
+                });
+
+            Route::prefix('{school}/registrations')
+                ->controller(RegistrationController::class)
+                ->group(function () {
+
+                    Route::get('/', 'index')
+                        ->name('api.v1.schools.registrations.index');
+
+                    Route::post('/', 'store')
+                        ->name('api.v1.schools.registrations.store');
+
+                    Route::get('/{registration}', 'show')
+                        ->name('api.v1.schools.registrations.show');
+
+                    Route::patch('/{registration}', 'update')
+                        ->name('api.v1.schools.registrations.patch');
+
+                    Route::delete('/{registration}', 'destroy')
+                        ->name('api.v1.schools.registrations.destroy');
                 });
         });
 });
