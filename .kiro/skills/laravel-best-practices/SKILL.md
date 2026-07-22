@@ -1,6 +1,6 @@
 ---
 name: laravel-best-practices
-description: "Apply this skill whenever writing, reviewing, or refactoring Laravel PHP code. This includes creating or modifying controllers, models, migrations, form requests, policies, jobs, scheduled commands, service classes, and Eloquent queries. Triggers for N+1 and query performance issues, caching strategies, authorization and security patterns, validation, error handling, queue and job configuration, route definitions, and architectural decisions. Also use for Laravel code reviews and refactoring existing Laravel code to follow best practices. Covers any task involving Laravel backend PHP code patterns."
+description: "Apply this skill whenever writing, reviewing, or refactoring Laravel PHP code. This includes creating or modifying controllers, models, migrations, policies, jobs, scheduled commands, service classes, and Eloquent queries. Triggers for N+1 and query performance issues, caching strategies, authorization and security patterns, validation, error handling, queue and job configuration, route definitions, and architectural decisions. Also use for Laravel code reviews and refactoring existing Laravel code to follow best practices. Covers any task involving Laravel backend PHP code patterns."
 license: MIT
 metadata:
   author: laravel
@@ -35,7 +35,7 @@ Cross-cutting changes often need more than one rule file.
 | Subqueries, aggregates, complex ordering and query plans | [`rules/advanced-queries.md`](rules/advanced-queries.md) |
 | Models, relationships, scopes, casts | [`rules/eloquent.md`](rules/eloquent.md) |
 | Authentication, authorization, input safety, secrets, uploads | [`rules/security.md`](rules/security.md) |
-| Form Requests and validation rules | [`rules/validation.md`](rules/validation.md) |
+| Validation rules (inline in controllers) | [`rules/validation.md`](rules/validation.md) |
 | Controllers, route binding, resources, middleware | [`rules/routing.md`](rules/routing.md) |
 | Schema changes, columns, foreign keys, indexes | [`rules/migrations.md`](rules/migrations.md) |
 | Jobs, retries, uniqueness, batches, Horizon | [`rules/queue-jobs.md`](rules/queue-jobs.md) |
