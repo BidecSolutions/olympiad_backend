@@ -16,14 +16,20 @@ class VerifyEmailController extends Controller
     public function verify(EmailVerificationRequest $request): JsonResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return response()->json(['message' => 'Email already verified.']);
+            return response()->json([
+                'status' => true,
+                'message' => 'Email already verified.',
+            ], 200);
         }
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
         }
 
-        return response()->json(['message' => 'Email verified successfully.']);
+        return response()->json([
+            'status' => true,
+            'message' => 'Email verified successfully.',
+        ], 200);
     }
 
     /**
@@ -32,11 +38,17 @@ class VerifyEmailController extends Controller
     public function resend(Request $request): JsonResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return response()->json(['message' => 'Email already verified.']);
+            return response()->json([
+                'status' => true,
+                'message' => 'Email already verified.',
+            ], 200);
         }
 
         $request->user()->sendEmailVerificationNotification();
 
-        return response()->json(['message' => 'Verification link sent.']);
+        return response()->json([
+            'status' => true,
+            'message' => 'Verification link sent.',
+        ], 200);
     }
 }

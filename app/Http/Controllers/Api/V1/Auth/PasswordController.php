@@ -29,7 +29,10 @@ class PasswordController extends Controller
             ]);
         }
 
-        return response()->json(['message' => __($status)]);
+        return response()->json([
+            'status' => true,
+            'message' => __($status),
+        ], 200);
     }
 
     /**
@@ -57,6 +60,9 @@ class PasswordController extends Controller
             ]);
         }
 
-        return response()->json(['message' => __($status)]);
+        return response()->json([
+            'status' => true,
+            'message' => __($status),
+        ], 200);
     }
 }

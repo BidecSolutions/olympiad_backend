@@ -7,15 +7,17 @@ use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/', function () {
-    return response()->json("API Is Working...!");
+    return response()->json([
+        'status' => true,
+        'message' => 'API is working.',
+    ], 200);
 });
 
 Route::prefix('v1')->group(function () {
 
-    // ========================================    
-    // [ Auth Routes ]
+    // ========================================
+    // [ Auth ]
     // ========================================
     Route::prefix('auth')->group(function () {
 
@@ -49,17 +51,14 @@ Route::prefix('v1')->group(function () {
         });
     });
 
-
-    // ========================================    
+    // ========================================
     // [ Role Permission ]
     // ========================================
 
-    //T O D O
+    // T O D O
 
-
-    // ========================================    
-    // [ Role Permission ]
     // ========================================
-
+    // [ School ]
+    // ========================================
 
 });

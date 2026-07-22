@@ -13,7 +13,8 @@ class LogoutController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
+            'status' => true,
             'message' => 'Logged out successfully.',
-        ]);
+        ], 200);
     }
 }
