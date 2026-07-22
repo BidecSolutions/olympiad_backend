@@ -44,4 +44,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(SchoolAdmin::class);
     }
+
+    /**
+     * @return HasMany<Event, $this>
+     */
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class, 'created_by');
+    }
 }

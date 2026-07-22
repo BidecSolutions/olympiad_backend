@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\Auth\LogoutController;
 use App\Http\Controllers\Api\V1\Auth\PasswordController;
 use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
+use App\Http\Controllers\Api\V1\EventController;
 use App\Http\Controllers\Api\V1\SchoolController;
 use App\Http\Controllers\Api\V1\StudentController;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +59,30 @@ Route::prefix('v1')->group(function () {
     // ========================================
 
     // T O D O
+
+    // ========================================
+    // [ Event ]
+    // ========================================
+    Route::middleware('auth:sanctum')
+        ->prefix('events')
+        ->controller(EventController::class)
+        ->group(function () {
+
+            Route::get('/', 'index')
+                ->name('api.v1.events.index');
+
+            Route::post('/', 'store')
+                ->name('api.v1.events.store');
+
+            Route::get('/{event}', 'show')
+                ->name('api.v1.events.show');
+
+            Route::patch('/{event}', 'update')
+                ->name('api.v1.events.patch');
+
+            Route::delete('/{event}', 'destroy')
+                ->name('api.v1.events.destroy');
+        });
 
     // ========================================
     // [ School ]
