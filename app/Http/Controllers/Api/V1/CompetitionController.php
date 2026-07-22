@@ -92,18 +92,20 @@ class CompetitionController extends Controller
             'description' => ['nullable', 'string'],
             'scoring_type' => ['nullable', Rule::enum(ScoringTypeEnum::class)],
             'status' => ['nullable', Rule::enum(CompetitionStatusEnum::class)],
-            'categories' => ['nullable', 'array'],
-            'categories.*.id' => [
+
+            //Competition Categories
+            'competition_categories' => ['nullable', 'array'],
+            'competition_categories.*.id' => [
                 'nullable',
                 'integer',
                 $competitionId
                     ? Rule::exists('competition_categories', 'id')->where('competition_id', $competitionId)
                     : 'prohibited',
             ],
-            'categories.*.name' => ['required', 'string', 'max:255'],
-            'categories.*.min_age' => ['required', 'integer', 'min:0', 'max:150'],
-            'categories.*.max_age' => ['required', 'integer', 'min:0', 'max:150', 'gte:categories.*.min_age'],
-            'categories.*.status' => ['nullable', Rule::enum(CompetitionCategoryStatusEnum::class)],
+            'competition_categories.*.name' => ['required', 'string', 'max:255'],
+            'competition_categories.*.min_age' => ['required', 'integer', 'min:0', 'max:150'],
+            'competition_categories.*.max_age' => ['required', 'integer', 'min:0', 'max:150', 'gte:competition_categories.*.min_age'],
+            'competition_categories.*.status' => ['nullable', Rule::enum(CompetitionCategoryStatusEnum::class)],
         ];
     }
 }

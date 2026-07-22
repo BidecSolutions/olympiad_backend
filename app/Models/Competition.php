@@ -62,7 +62,7 @@ class Competition extends Model
     /**
      * @return HasMany<CompetitionCategory, $this>
      */
-    public function categories(): HasMany
+    public function competitionCategories(): HasMany
     {
         return $this->hasMany(CompetitionCategory::class);
     }

@@ -136,24 +136,24 @@ Route::prefix('v1')->group(function () {
             Route::delete('/{competition}', 'destroy')
                 ->name('api.v1.competitions.destroy');
 
-            Route::prefix('{competition}/categories')
+            Route::prefix('{competition}/competition-categories')
                 ->controller(CompetitionCategoryController::class)
                 ->group(function () {
 
                     Route::get('/', 'index')
-                        ->name('api.v1.competitions.categories.index');
+                        ->name('api.v1.competitions.competition-categories.index');
 
                     Route::post('/', 'store')
-                        ->name('api.v1.competitions.categories.store');
+                        ->name('api.v1.competitions.competition-categories.store');
 
                     Route::get('/{competitionCategory}', 'show')
-                        ->name('api.v1.competitions.categories.show');
+                        ->name('api.v1.competitions.competition-categories.show');
 
                     Route::patch('/{competitionCategory}', 'update')
-                        ->name('api.v1.competitions.categories.patch');
+                        ->name('api.v1.competitions.competition-categories.patch');
 
                     Route::delete('/{competitionCategory}', 'destroy')
-                        ->name('api.v1.competitions.categories.destroy');
+                        ->name('api.v1.competitions.competition-categories.destroy');
                 });
         });
 

@@ -14,7 +14,7 @@ class CompetitionCategoryService
      */
     public function list(Competition $competition, int $perPage = 15): LengthAwarePaginator
     {
-        return $competition->categories()
+        return $competition->competitionCategories()
             ->with('competition')
             ->latest()
             ->paginate($perPage);
@@ -27,7 +27,7 @@ class CompetitionCategoryService
     {
         unset($data['competition_id']);
 
-        $category = $competition->categories()->create($data);
+        $category = $competition->competitionCategories()->create($data);
 
         return $category->load('competition');
     }
@@ -57,15 +57,15 @@ class CompetitionCategoryService
     }
 
     /**
-     * @param  list<array<string, mixed>>  $categories
+     * @param  list<array<string, mixed>>  $competitionCategories
      */
-    public function syncForCompetition(Competition $competition, array $categories): void
+    public function syncForCompetition(Competition $competition, array $competitionCategories): void
     {
         $categoryIds = [];
 
-        foreach ($categories as $categoryData) {
+        foreach ($competitionCategories as $categoryData) {
             if (! empty($categoryData['id'])) {
-                $category = $competition->categories()->findOrFail($categoryData['id']);
+                $category = $competition->competitionCategories()->findOrFail($categoryData['id']);
                 $category->update([
                     'name' => $categoryData['name'],
                     'min_age' => $categoryData['min_age'],
@@ -74,7 +74,7 @@ class CompetitionCategoryService
                 ]);
                 $categoryIds[] = $category->id;
             } else {
-                $category = $competition->categories()->create([
+                $category = $competition->competitionCategories()->create([
                     'name' => $categoryData['name'],
                     'min_age' => $categoryData['min_age'],
                     'max_age' => $categoryData['max_age'],
@@ -85,11 +85,11 @@ class CompetitionCategoryService
         }
 
         if ($categoryIds === []) {
-            $competition->categories()->delete();
+            $competition->competitionCategories()->delete();
 
             return;
         }
 
-        $competition->categories()->whereNotIn('id', $categoryIds)->delete();
+        $competition->competitionCategories()->whereNotIn('id', $categoryIds)->delete();
     }
 }

@@ -17,12 +17,12 @@ class CompetitionCategoryController extends Controller
 
     public function index(Competition $competition): JsonResponse
     {
-        $categories = $this->competitionCategoryService->list($competition);
+        $competitionCategories = $this->competitionCategoryService->list($competition);
 
         return response()->json([
             'status' => true,
             'message' => 'Competition categories retrieved successfully.',
-            'data' => $categories,
+            'data' => $competitionCategories,
         ]);
     }
 
