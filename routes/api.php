@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\Auth\LogoutController;
 use App\Http\Controllers\Api\V1\Auth\PasswordController;
 use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
+use App\Http\Controllers\Api\V1\CompetitionTypeController;
 use App\Http\Controllers\Api\V1\EventController;
 use App\Http\Controllers\Api\V1\SchoolController;
 use App\Http\Controllers\Api\V1\StudentController;
@@ -82,6 +83,30 @@ Route::prefix('v1')->group(function () {
 
             Route::delete('/{event}', 'destroy')
                 ->name('api.v1.events.destroy');
+        });
+
+    // ========================================
+    // [ Competition Type ]
+    // ========================================
+    Route::middleware('auth:sanctum')
+        ->prefix('competition-types')
+        ->controller(CompetitionTypeController::class)
+        ->group(function () {
+
+            Route::get('/', 'index')
+                ->name('api.v1.competition-types.index');
+
+            Route::post('/', 'store')
+                ->name('api.v1.competition-types.store');
+
+            Route::get('/{competitionType}', 'show')
+                ->name('api.v1.competition-types.show');
+
+            Route::patch('/{competitionType}', 'update')
+                ->name('api.v1.competition-types.patch');
+
+            Route::delete('/{competitionType}', 'destroy')
+                ->name('api.v1.competition-types.destroy');
         });
 
     // ========================================
