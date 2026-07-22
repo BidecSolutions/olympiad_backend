@@ -55,6 +55,14 @@
 		{
 			"key": "participation_id",
 			"value": "1"
+		},
+		{
+			"key": "team_id",
+			"value": "1"
+		},
+		{
+			"key": "team_member_id",
+			"value": "1"
 		}
 	],
 	"item": [
@@ -1587,6 +1595,349 @@
 								"{{school_id}}",
 								"students",
 								"{{student_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Team",
+			"item": [
+				{
+					"name": "List Teams",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/schools/{{school_id}}/teams",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"schools",
+								"{{school_id}}",
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Team",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Science Team A\",\n    \"status\": \"active\",\n    \"members\": [\n        {\n            \"student_id\": {{student_id}}\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/schools/{{school_id}}/teams",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"schools",
+								"{{school_id}}",
+								"teams"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const json = pm.response.json();",
+									"    if (json.data && json.data.id) {",
+									"        pm.collectionVariables.set('team_id', json.data.id);",
+									"    }",
+									"    if (json.data && json.data.members && json.data.members.length > 0) {",
+									"        pm.collectionVariables.set('team_member_id', json.data.members[0].id);",
+									"    }",
+									"}"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Show Team",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"schools",
+								"{{school_id}}",
+								"teams",
+								"{{team_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Team",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Science Team A Updated\",\n    \"status\": \"inactive\",\n    \"members\": [\n        {\n            \"id\": {{team_member_id}},\n            \"student_id\": {{student_id}}\n        },\n        {\n            \"student_id\": 2\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"schools",
+								"{{school_id}}",
+								"teams",
+								"{{team_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Team",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"schools",
+								"{{school_id}}",
+								"teams",
+								"{{team_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Team Member",
+			"item": [
+				{
+					"name": "List Team Members",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}/members",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"schools",
+								"{{school_id}}",
+								"teams",
+								"{{team_id}}",
+								"members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Team Member",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"student_id\": {{student_id}}\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}/members",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"schools",
+								"{{school_id}}",
+								"teams",
+								"{{team_id}}",
+								"members"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const json = pm.response.json();",
+									"    if (json.data && json.data.id) {",
+									"        pm.collectionVariables.set('team_member_id', json.data.id);",
+									"    }",
+									"}"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Show Team Member",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}/members/{{team_member_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"schools",
+								"{{school_id}}",
+								"teams",
+								"{{team_id}}",
+								"members",
+								"{{team_member_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Team Member",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"student_id\": {{student_id}}\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}/members/{{team_member_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"schools",
+								"{{school_id}}",
+								"teams",
+								"{{team_id}}",
+								"members",
+								"{{team_member_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Team Member",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}/members/{{team_member_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"schools",
+								"{{school_id}}",
+								"teams",
+								"{{team_id}}",
+								"members",
+								"{{team_member_id}}"
 							]
 						}
 					},

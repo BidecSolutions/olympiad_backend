@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Enums\GenderEnum;
-use App\Enums\StudentStatusEnum;
-use Database\Factories\StudentFactory;
+use App\Enums\TeamStatusEnum;
+use Database\Factories\TeamFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,20 +12,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
     'school_id',
-    'student_code',
     'name',
-    'father_name',
-    'date_of_birth',
-    'gender',
-    'class',
-    'section',
-    'photo',
     'status',
-    'blacklist_reason',
 ])]
-class Student extends Model
+class Team extends Model
 {
-    /** @use HasFactory<StudentFactory> */
+    /** @use HasFactory<TeamFactory> */
     use HasFactory;
 
     /**
@@ -42,9 +33,7 @@ class Student extends Model
     protected function casts(): array
     {
         return [
-            'date_of_birth' => 'date',
-            'gender' => GenderEnum::class,
-            'status' => StudentStatusEnum::class,
+            'status' => TeamStatusEnum::class,
         ];
     }
 
@@ -59,7 +48,7 @@ class Student extends Model
     /**
      * @return HasMany<TeamMember, $this>
      */
-    public function teamMembers(): HasMany
+    public function members(): HasMany
     {
         return $this->hasMany(TeamMember::class);
     }

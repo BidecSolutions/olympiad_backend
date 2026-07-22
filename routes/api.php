@@ -13,6 +13,8 @@ use App\Http\Controllers\Api\V1\EventController;
 use App\Http\Controllers\Api\V1\ParticipationTypeController;
 use App\Http\Controllers\Api\V1\SchoolController;
 use App\Http\Controllers\Api\V1\StudentController;
+use App\Http\Controllers\Api\V1\TeamController;
+use App\Http\Controllers\Api\V1\TeamMemberController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -246,6 +248,49 @@ Route::prefix('v1')->group(function () {
 
                     Route::delete('/{student}', 'destroy')
                         ->name('api.v1.schools.students.destroy');
+                });
+
+            Route::prefix('{school}/teams')
+                ->group(function () {
+
+                    Route::controller(TeamController::class)
+                        ->group(function () {
+
+                            Route::get('/', 'index')
+                                ->name('api.v1.schools.teams.index');
+
+                            Route::post('/', 'store')
+                                ->name('api.v1.schools.teams.store');
+
+                            Route::get('/{team}', 'show')
+                                ->name('api.v1.schools.teams.show');
+
+                            Route::patch('/{team}', 'update')
+                                ->name('api.v1.schools.teams.patch');
+
+                            Route::delete('/{team}', 'destroy')
+                                ->name('api.v1.schools.teams.destroy');
+                        });
+
+                    Route::prefix('{team}/members')
+                        ->controller(TeamMemberController::class)
+                        ->group(function () {
+
+                            Route::get('/', 'index')
+                                ->name('api.v1.schools.teams.members.index');
+
+                            Route::post('/', 'store')
+                                ->name('api.v1.schools.teams.members.store');
+
+                            Route::get('/{teamMember}', 'show')
+                                ->name('api.v1.schools.teams.members.show');
+
+                            Route::patch('/{teamMember}', 'update')
+                                ->name('api.v1.schools.teams.members.patch');
+
+                            Route::delete('/{teamMember}', 'destroy')
+                                ->name('api.v1.schools.teams.members.destroy');
+                        });
                 });
         });
 });
