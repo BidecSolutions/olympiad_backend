@@ -7,30 +7,59 @@ use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
+
+Route::get('/', function () {
+    return response()->json("API Is Working...!");
+});
+
 Route::prefix('v1')->group(function () {
 
-    // Guest-only auth routes
-    Route::middleware('guest:sanctum')->group(function () {
-        Route::post('/auth/register', RegisterController::class)->name('api.v1.auth.register');
-        Route::post('/auth/login', LoginController::class)->name('api.v1.auth.login');
+    // ========================================    
+    // [ Auth Routes ]
+    // ========================================
+    Route::prefix('auth')->group(function () {
 
-        // Password reset
-        Route::post('/auth/forgot-password', [PasswordController::class, 'forgotPassword'])->name('api.v1.auth.password.forgot');
-        Route::post('/auth/reset-password', [PasswordController::class, 'resetPassword'])->name('api.v1.auth.password.reset');
+        // Guest-only auth routes
+        Route::middleware('guest:sanctum')->group(function () {
+            Route::post('/register', RegisterController::class)
+                ->name('api.v1.auth.register');
+
+            Route::post('/login', LoginController::class)
+                ->name('api.v1.auth.login');
+
+            Route::post('/forgot-password', [PasswordController::class, 'forgotPassword'])
+                ->name('api.v1.auth.password.forgot');
+
+            Route::post('/reset-password', [PasswordController::class, 'resetPassword'])
+                ->name('api.v1.auth.password.reset');
+        });
+
+        // Authenticated routes
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::post('/logout', LogoutController::class)
+                ->name('api.v1.auth.logout');
+
+            Route::post('/email/verification-notification', [VerifyEmailController::class, 'resend'])
+                ->middleware('throttle:6,1')
+                ->name('api.v1.auth.verification.send');
+
+            Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])
+                ->middleware('signed')
+                ->name('verification.verify');
+        });
     });
 
-    // Authenticated routes
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/auth/logout', LogoutController::class)->name('api.v1.auth.logout');
 
-        // Email verification
-        Route::post('/auth/email/verification-notification', [VerifyEmailController::class, 'resend'])
-            ->middleware('throttle:6,1')
-            ->name('api.v1.auth.verification.send');
+    // ========================================    
+    // [ Role Permission ]
+    // ========================================
 
-        Route::get('/auth/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])
-            ->middleware('signed')
-            ->name('verification.verify');
-    });
+    //T O D O
+
+
+    // ========================================    
+    // [ Role Permission ]
+    // ========================================
+
 
 });
