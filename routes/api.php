@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\Auth\PasswordController;
 use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\V1\SchoolController;
+use App\Http\Controllers\Api\V1\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -80,5 +81,25 @@ Route::prefix('v1')->group(function () {
 
             Route::delete('/{school}', 'destroy')
                 ->name('api.v1.schools.destroy');
+
+            Route::prefix('{school}/students')
+                ->controller(StudentController::class)
+                ->group(function () {
+
+                    Route::get('/', 'index')
+                        ->name('api.v1.schools.students.index');
+
+                    Route::post('/', 'store')
+                        ->name('api.v1.schools.students.store');
+
+                    Route::get('/{student}', 'show')
+                        ->name('api.v1.schools.students.show');
+
+                    Route::patch('/{student}', 'update')
+                        ->name('api.v1.schools.students.patch');
+
+                    Route::delete('/{student}', 'destroy')
+                        ->name('api.v1.schools.students.destroy');
+                });
         });
 });

@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\SchoolDocumentStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@ return new class extends Migration
             $table->foreignId('school_id')->constrained()->cascadeOnDelete();
             $table->string('document_type')->index();
             $table->string('file_path');
-            $table->string('status')->default('pending')->index();
+            $table->string('status')->default(SchoolDocumentStatusEnum::Pending->value)->index();
             $table->timestamps();
         });
     }

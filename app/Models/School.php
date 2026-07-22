@@ -56,4 +56,12 @@ class School extends Model
     {
         return $this->hasMany(SchoolAdmin::class);
     }
+
+    /**
+     * @return HasMany<Student, $this>
+     */
+    public function students(): HasMany
+    {
+        return $this->hasMany(Student::class);
+    }
 }

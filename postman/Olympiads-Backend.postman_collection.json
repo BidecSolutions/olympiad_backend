@@ -27,6 +27,10 @@
 		{
 			"key": "school_id",
 			"value": "1"
+		},
+		{
+			"key": "student_id",
+			"value": "1"
 		}
 	],
 	"item": [
@@ -444,6 +448,171 @@
 								"v1",
 								"schools",
 								"{{school_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "List Students",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/schools/{{school_id}}/students",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"schools",
+								"{{school_id}}",
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Student",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"student_code\": \"STU-1001\",\n    \"name\": \"Ali Khan\",\n    \"father_name\": \"Ahmed Khan\",\n    \"date_of_birth\": \"2010-05-15\",\n    \"gender\": \"male\",\n    \"class\": \"8\",\n    \"section\": \"A\",\n    \"photo\": \"students/ali-khan.jpg\",\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/schools/{{school_id}}/students",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"schools",
+								"{{school_id}}",
+								"students"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const json = pm.response.json();",
+									"    if (json.data && json.data.id) {",
+									"        pm.collectionVariables.set('student_id', json.data.id);",
+									"    }",
+									"}"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Show Student",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/schools/{{school_id}}/students/{{student_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"schools",
+								"{{school_id}}",
+								"students",
+								"{{student_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Student",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Ali Khan Updated\",\n    \"class\": \"9\",\n    \"section\": \"B\",\n    \"status\": \"blacklisted\",\n    \"blacklist_reason\": \"Violation of competition rules.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/schools/{{school_id}}/students/{{student_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"schools",
+								"{{school_id}}",
+								"students",
+								"{{student_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Student",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/schools/{{school_id}}/students/{{student_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"schools",
+								"{{school_id}}",
+								"students",
+								"{{student_id}}"
 							]
 						}
 					},

@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\SchoolStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +21,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
             $table->string('city')->nullable();
-            $table->string('status')->default('pending')->index();
+            $table->string('status')->default(SchoolStatusEnum::Pending->value)->index();
             $table->timestamps();
         });
     }
