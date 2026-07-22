@@ -5,8 +5,12 @@ use App\Http\Controllers\Api\V1\Auth\LogoutController;
 use App\Http\Controllers\Api\V1\Auth\PasswordController;
 use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
+use App\Http\Controllers\Api\V1\CompetitionCategoryController;
+use App\Http\Controllers\Api\V1\CompetitionCategoryParticipationController;
+use App\Http\Controllers\Api\V1\CompetitionController;
 use App\Http\Controllers\Api\V1\CompetitionTypeController;
 use App\Http\Controllers\Api\V1\EventController;
+use App\Http\Controllers\Api\V1\ParticipationTypeController;
 use App\Http\Controllers\Api\V1\SchoolController;
 use App\Http\Controllers\Api\V1\StudentController;
 use Illuminate\Support\Facades\Route;
@@ -107,6 +111,98 @@ Route::prefix('v1')->group(function () {
 
             Route::delete('/{competitionType}', 'destroy')
                 ->name('api.v1.competition-types.destroy');
+        });
+
+    // ========================================
+    // [ Competition ]
+    // ========================================
+    Route::middleware('auth:sanctum')
+        ->prefix('competitions')
+        ->controller(CompetitionController::class)
+        ->group(function () {
+
+            Route::get('/', 'index')
+                ->name('api.v1.competitions.index');
+
+            Route::post('/', 'store')
+                ->name('api.v1.competitions.store');
+
+            Route::get('/{competition}', 'show')
+                ->name('api.v1.competitions.show');
+
+            Route::patch('/{competition}', 'update')
+                ->name('api.v1.competitions.patch');
+
+            Route::delete('/{competition}', 'destroy')
+                ->name('api.v1.competitions.destroy');
+
+            Route::prefix('{competition}/categories')
+                ->controller(CompetitionCategoryController::class)
+                ->group(function () {
+
+                    Route::get('/', 'index')
+                        ->name('api.v1.competitions.categories.index');
+
+                    Route::post('/', 'store')
+                        ->name('api.v1.competitions.categories.store');
+
+                    Route::get('/{competitionCategory}', 'show')
+                        ->name('api.v1.competitions.categories.show');
+
+                    Route::patch('/{competitionCategory}', 'update')
+                        ->name('api.v1.competitions.categories.patch');
+
+                    Route::delete('/{competitionCategory}', 'destroy')
+                        ->name('api.v1.competitions.categories.destroy');
+                });
+        });
+
+    // ========================================
+    // [ Participation Type ]
+    // ========================================
+    Route::middleware('auth:sanctum')
+        ->prefix('participation-types')
+        ->controller(ParticipationTypeController::class)
+        ->group(function () {
+
+            Route::get('/', 'index')
+                ->name('api.v1.participation-types.index');
+
+            Route::post('/', 'store')
+                ->name('api.v1.participation-types.store');
+
+            Route::get('/{participationType}', 'show')
+                ->name('api.v1.participation-types.show');
+
+            Route::patch('/{participationType}', 'update')
+                ->name('api.v1.participation-types.patch');
+
+            Route::delete('/{participationType}', 'destroy')
+                ->name('api.v1.participation-types.destroy');
+        });
+
+    // ========================================
+    // [ Competition Category Participation ]
+    // ========================================
+    Route::middleware('auth:sanctum')
+        ->prefix('competition-categories/{competitionCategory}/participations')
+        ->controller(CompetitionCategoryParticipationController::class)
+        ->group(function () {
+
+            Route::get('/', 'index')
+                ->name('api.v1.competition-categories.participations.index');
+
+            Route::post('/', 'store')
+                ->name('api.v1.competition-categories.participations.store');
+
+            Route::get('/{participation}', 'show')
+                ->name('api.v1.competition-categories.participations.show');
+
+            Route::patch('/{participation}', 'update')
+                ->name('api.v1.competition-categories.participations.patch');
+
+            Route::delete('/{participation}', 'destroy')
+                ->name('api.v1.competition-categories.participations.destroy');
         });
 
     // ========================================

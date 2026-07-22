@@ -35,6 +35,26 @@
 		{
 			"key": "competition_type_id",
 			"value": "1"
+		},
+		{
+			"key": "event_id",
+			"value": "1"
+		},
+		{
+			"key": "competition_id",
+			"value": "1"
+		},
+		{
+			"key": "competition_category_id",
+			"value": "1"
+		},
+		{
+			"key": "participation_type_id",
+			"value": "1"
+		},
+		{
+			"key": "participation_id",
+			"value": "1"
 		}
 	],
 	"item": [
@@ -607,6 +627,801 @@
 								"v1",
 								"competition-types",
 								"{{competition_type_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Event",
+			"item": [
+				{
+					"name": "List Events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/events",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"National Olympiad 2026\",\n    \"description\": \"Annual national olympiad event.\",\n    \"start_date\": \"2026-08-01\",\n    \"end_date\": \"2026-08-15\",\n    \"status\": \"draft\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/events",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"events"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const json = pm.response.json();",
+									"    if (json.data && json.data.id) {",
+									"        pm.collectionVariables.set('event_id', json.data.id);",
+									"    }",
+									"}"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Show Event",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/events/{{event_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"events",
+								"{{event_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Event",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"National Olympiad 2026 Updated\",\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/events/{{event_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"events",
+								"{{event_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Event",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/events/{{event_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"events",
+								"{{event_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Competition",
+			"item": [
+				{
+					"name": "List Competitions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/competitions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"competitions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Competition",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"event_id\": {{event_id}},\n    \"competition_type_id\": {{competition_type_id}},\n    \"name\": \"Mathematics Olympiad\",\n    \"description\": \"Mathematics competition for all age groups.\",\n    \"scoring_type\": \"points\",\n    \"status\": \"draft\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/competitions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"competitions"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const json = pm.response.json();",
+									"    if (json.data && json.data.id) {",
+									"        pm.collectionVariables.set('competition_id', json.data.id);",
+									"    }",
+									"}"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Show Competition",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/competitions/{{competition_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"competitions",
+								"{{competition_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Competition",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Mathematics Olympiad Updated\",\n    \"scoring_type\": \"rank\",\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/competitions/{{competition_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"competitions",
+								"{{competition_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Competition",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/competitions/{{competition_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"competitions",
+								"{{competition_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Competition Category",
+			"item": [
+				{
+					"name": "List Competition Categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/competitions/{{competition_id}}/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"competitions",
+								"{{competition_id}}",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Competition Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Junior\",\n    \"min_age\": 10,\n    \"max_age\": 14,\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/competitions/{{competition_id}}/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"competitions",
+								"{{competition_id}}",
+								"categories"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const json = pm.response.json();",
+									"    if (json.data && json.data.id) {",
+									"        pm.collectionVariables.set('competition_category_id', json.data.id);",
+									"    }",
+									"}"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Show Competition Category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/competitions/{{competition_id}}/categories/{{competition_category_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"competitions",
+								"{{competition_id}}",
+								"categories",
+								"{{competition_category_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Competition Category",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Junior Updated\",\n    \"min_age\": 11,\n    \"max_age\": 15,\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/competitions/{{competition_id}}/categories/{{competition_category_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"competitions",
+								"{{competition_id}}",
+								"categories",
+								"{{competition_category_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Competition Category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/competitions/{{competition_id}}/categories/{{competition_category_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"competitions",
+								"{{competition_id}}",
+								"categories",
+								"{{competition_category_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Participation Type",
+			"item": [
+				{
+					"name": "List Participation Types",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/participation-types",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"participation-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Participation Type",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Individual\",\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/participation-types",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"participation-types"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const json = pm.response.json();",
+									"    if (json.data && json.data.id) {",
+									"        pm.collectionVariables.set('participation_type_id', json.data.id);",
+									"    }",
+									"}"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Show Participation Type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/participation-types/{{participation_type_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"participation-types",
+								"{{participation_type_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Participation Type",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Team\",\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/participation-types/{{participation_type_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"participation-types",
+								"{{participation_type_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Participation Type",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/participation-types/{{participation_type_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"participation-types",
+								"{{participation_type_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Competition Category Participation",
+			"item": [
+				{
+					"name": "List Category Participations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/competition-categories/{{competition_category_id}}/participations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"competition-categories",
+								"{{competition_category_id}}",
+								"participations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category Participation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"participation_type_id\": {{participation_type_id}}\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/competition-categories/{{competition_category_id}}/participations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"competition-categories",
+								"{{competition_category_id}}",
+								"participations"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const json = pm.response.json();",
+									"    if (json.data && json.data.id) {",
+									"        pm.collectionVariables.set('participation_id', json.data.id);",
+									"    }",
+									"}"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Show Category Participation",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/competition-categories/{{competition_category_id}}/participations/{{participation_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"competition-categories",
+								"{{competition_category_id}}",
+								"participations",
+								"{{participation_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category Participation",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"participation_type_id\": {{participation_type_id}}\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/competition-categories/{{competition_category_id}}/participations/{{participation_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"competition-categories",
+								"{{competition_category_id}}",
+								"participations",
+								"{{participation_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category Participation",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/v1/competition-categories/{{competition_category_id}}/participations/{{participation_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"competition-categories",
+								"{{competition_category_id}}",
+								"participations",
+								"{{participation_id}}"
 							]
 						}
 					},
