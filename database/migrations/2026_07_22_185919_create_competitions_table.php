@@ -1,7 +1,6 @@
 <?php
 
 use App\Enums\CompetitionStatusEnum;
-use App\Enums\CompetitionTypeEnum;
 use App\Enums\ScoringTypeEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,7 +16,7 @@ return new class extends Migration
         Schema::create('competitions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id')->constrained()->cascadeOnDelete();
-            $table->string('competition_type')->default(CompetitionTypeEnum::Academic->value)->index();
+            $table->foreignId('competition_type_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('scoring_type')->default(ScoringTypeEnum::Points->value)->index();

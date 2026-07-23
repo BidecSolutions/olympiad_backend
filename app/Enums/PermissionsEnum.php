@@ -20,7 +20,14 @@ enum PermissionsEnum: string
     case EventsPatch = 'events.patch';
     case EventsDestroy = 'events.destroy';
 
-    // Events
+    // Competition Types
+    case CompetitionTypesList = 'competition-types.list';
+    case CompetitionTypesStore = 'competition-types.store';
+    case CompetitionTypesShow = 'competition-types.show';
+    case CompetitionTypesPatch = 'competition-types.patch';
+    case CompetitionTypesDestroy = 'competition-types.destroy';
+
+    // Competitions
     case CompetitionsList = 'competitions.list';
     case CompetitionsStore = 'competitions.store';
     case CompetitionsShow = 'competitions.show';
