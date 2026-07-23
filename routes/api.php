@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\V1\CompetitionCategoryParticipationController;
 use App\Http\Controllers\Api\V1\CompetitionController;
 use App\Http\Controllers\Api\V1\CompetitionTypeController;
 use App\Http\Controllers\Api\V1\EventController;
+use App\Http\Controllers\Api\V1\OfficialController;
 use App\Http\Controllers\Api\V1\ParticipationTypeController;
 use App\Http\Controllers\Api\V1\RegistrationController;
 use App\Http\Controllers\Api\V1\SchoolController;
@@ -63,10 +64,8 @@ Route::prefix('v1')->group(function () {
     });
 
     // ========================================
-    // [ Role Permission ]
+    // [ Role Permission ]  //Seed
     // ========================================
-
-    // T O D O
 
     // ========================================
     // [ Event ]
@@ -90,6 +89,30 @@ Route::prefix('v1')->group(function () {
 
             Route::delete('/{event}', 'destroy')
                 ->name('api.v1.events.destroy');
+        });
+
+    // ========================================
+    // [ Official ]
+    // ========================================
+    Route::middleware('auth:sanctum')
+        ->prefix('officials')
+        ->controller(OfficialController::class)
+        ->group(function () {
+
+            Route::get('/', 'index')
+                ->name('api.v1.officials.index');
+
+            Route::post('/', 'store')
+                ->name('api.v1.officials.store');
+
+            Route::get('/{official}', 'show')
+                ->name('api.v1.officials.show');
+
+            Route::patch('/{official}', 'update')
+                ->name('api.v1.officials.patch');
+
+            Route::delete('/{official}', 'destroy')
+                ->name('api.v1.officials.destroy');
         });
 
     // ========================================
