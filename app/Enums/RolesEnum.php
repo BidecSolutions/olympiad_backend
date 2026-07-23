@@ -8,4 +8,6 @@ enum RolesEnum: string
     case SubAdmin = 'sub_admin';
     case SchoolAdmin = 'school_admin';
     case Judge = 'judge';
+    case Referee = 'referee';
+    case Umpire = 'umpire';
 }
