@@ -33,10 +33,6 @@
 			"value": "1"
 		},
 		{
-			"key": "competition_type_id",
-			"value": "1"
-		},
-		{
 			"key": "event_id",
 			"value": "1"
 		},
@@ -488,161 +484,6 @@
 			]
 		},
 		{
-			"name": "Competition Type",
-			"item": [
-				{
-					"name": "List Competition Types",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/v1/competition-types",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"v1",
-								"competition-types"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Competition Type",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Mathematics Olympiad\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/v1/competition-types",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"v1",
-								"competition-types"
-							]
-						}
-					},
-					"response": [],
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"if (pm.response.code === 201) {",
-									"    const json = pm.response.json();",
-									"    if (json.data && json.data.id) {",
-									"        pm.collectionVariables.set('competition_type_id', json.data.id);",
-									"    }",
-									"}"
-								]
-							}
-						}
-					]
-				},
-				{
-					"name": "Show Competition Type",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/v1/competition-types/{{competition_type_id}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"v1",
-								"competition-types",
-								"{{competition_type_id}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Competition Type",
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Science Olympiad\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/v1/competition-types/{{competition_type_id}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"v1",
-								"competition-types",
-								"{{competition_type_id}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Competition Type",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/v1/competition-types/{{competition_type_id}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"v1",
-								"competition-types",
-								"{{competition_type_id}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "Event",
 			"item": [
 				{
@@ -839,7 +680,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"event_id\": {{event_id}},\n    \"competition_type_id\": {{competition_type_id}},\n    \"name\": \"Mathematics Olympiad\",\n    \"description\": \"Mathematics competition for all age groups.\",\n    \"scoring_type\": \"points\",\n    \"status\": \"draft\",\n    \"competition_categories\": [\n        {\n            \"name\": \"Junior\",\n            \"min_age\": 10,\n            \"max_age\": 14,\n            \"status\": \"active\"\n        },\n        {\n            \"name\": \"Senior\",\n            \"min_age\": 15,\n            \"max_age\": 18,\n            \"status\": \"active\"\n        }\n    ]\n}"
+							"raw": "{\n    \"event_id\": {{event_id}},\n    \"competition_type\": \"academic\",\n    \"name\": \"Mathematics Olympiad\",\n    \"description\": \"Mathematics competition for all age groups.\",\n    \"scoring_type\": \"points\",\n    \"status\": \"draft\",\n    \"competition_categories\": [\n        {\n            \"name\": \"Junior\",\n            \"min_age\": 10,\n            \"max_age\": 14,\n            \"status\": \"active\"\n        },\n        {\n            \"name\": \"Senior\",\n            \"min_age\": 15,\n            \"max_age\": 18,\n            \"status\": \"active\"\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/v1/competitions",
