@@ -27,6 +27,8 @@ return new class extends Migration
             $table->id(); // permission id
             $table->string('name');
             $table->string('guard_name');
+            $table->string('module_name')->nullable();
+            $table->string('label')->nullable();
             $table->timestamps();
 
             $table->unique(['name', 'guard_name']);

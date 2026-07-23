@@ -89,4 +89,11 @@ enum PermissionsEnum: string
     case SchoolRegistrationsShow = 'schools.registrations.show';
     case SchoolRegistrationsPatch = 'schools.registrations.patch';
     case SchoolRegistrationsDestroy = 'schools.registrations.destroy';
+
+    // Officials
+    case OfficialsList = 'officials.list';
+    case OfficialsStore = 'officials.store';
+    case OfficialsShow = 'officials.show';
+    case OfficialsPatch = 'officials.patch';
+    case OfficialsDestroy = 'officials.destroy';
 }
