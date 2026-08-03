@@ -69,13 +69,6 @@ enum PermissionsEnum: string
     case SchoolTeamMembersPatch = 'schools.teams.members.patch';
     case SchoolTeamMembersDestroy = 'schools.teams.members.destroy';
 
-    // Registrations
-    case SchoolRegistrationsList = 'schools.registrations.list';
-    case SchoolRegistrationsStore = 'schools.registrations.store';
-    case SchoolRegistrationsShow = 'schools.registrations.show';
-    case SchoolRegistrationsPatch = 'schools.registrations.patch';
-    case SchoolRegistrationsDestroy = 'schools.registrations.destroy';
-
     // Officials
     case OfficialsList = 'officials.list';
     case OfficialsStore = 'officials.store';

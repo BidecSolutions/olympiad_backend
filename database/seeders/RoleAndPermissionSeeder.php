@@ -99,13 +99,6 @@ class RoleAndPermissionSeeder extends Seeder
                 'Edit' => PermissionsEnum::SchoolTeamMembersPatch,
                 'Delete' => PermissionsEnum::SchoolTeamMembersDestroy,
             ],
-            'Registrations' => [
-                'List' => PermissionsEnum::SchoolRegistrationsList,
-                'Create' => PermissionsEnum::SchoolRegistrationsStore,
-                'View' => PermissionsEnum::SchoolRegistrationsShow,
-                'Edit' => PermissionsEnum::SchoolRegistrationsPatch,
-                'Delete' => PermissionsEnum::SchoolRegistrationsDestroy,
-            ],
         ];
 
         foreach ($modules as $module => $permissions) {

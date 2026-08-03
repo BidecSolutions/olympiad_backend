@@ -52,12 +52,4 @@ class Team extends Model
     {
         return $this->hasMany(TeamMember::class);
     }
-
-    /**
-     * @return HasMany<Registration, $this>
-     */
-    public function registrations(): HasMany
-    {
-        return $this->hasMany(Registration::class);
-    }
 }

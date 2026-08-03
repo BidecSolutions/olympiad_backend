@@ -72,12 +72,4 @@ class School extends Model
     {
         return $this->hasMany(Team::class);
     }
-
-    /**
-     * @return HasMany<Registration, $this>
-     */
-    public function registrations(): HasMany
-    {
-        return $this->hasMany(Registration::class);
-    }
 }

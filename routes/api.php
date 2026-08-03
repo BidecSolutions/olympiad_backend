@@ -10,7 +10,6 @@ use App\Http\Controllers\Api\CompetitionCategoryParticipationController;
 use App\Http\Controllers\Api\CompetitionController;
 use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\OfficialController;
-use App\Http\Controllers\Api\RegistrationController;
 use App\Http\Controllers\Api\SchoolController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\TeamController;
@@ -263,25 +262,5 @@ Route::middleware('auth:sanctum')
                         Route::delete('/{teamMember}', 'destroy')
                             ->name('api.schools.teams.members.destroy');
                     });
-            });
-
-        Route::prefix('{school}/registrations')
-            ->controller(RegistrationController::class)
-            ->group(function () {
-
-                Route::get('/', 'index')
-                    ->name('api.schools.registrations.index');
-
-                Route::post('/', 'store')
-                    ->name('api.schools.registrations.store');
-
-                Route::get('/{registration}', 'show')
-                    ->name('api.schools.registrations.show');
-
-                Route::patch('/{registration}', 'update')
-                    ->name('api.schools.registrations.patch');
-
-                Route::delete('/{registration}', 'destroy')
-                    ->name('api.schools.registrations.destroy');
             });
     });
