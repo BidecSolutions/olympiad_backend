@@ -18,7 +18,6 @@ class RegistrationService
             'student',
             'team.members.student',
             'competitionCategoryParticipation.competitionCategory.competition',
-            'competitionCategoryParticipation.participationType',
         ];
     }
 

@@ -13,8 +13,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[Fillable([
     'competition_id',
     'name',
-    'min_age',
-    'max_age',
     'status',
 ])]
 class CompetitionCategory extends Model
@@ -35,8 +33,6 @@ class CompetitionCategory extends Model
     protected function casts(): array
     {
         return [
-            'min_age' => 'integer',
-            'max_age' => 'integer',
             'status' => CompetitionCategoryStatusEnum::class,
         ];
     }

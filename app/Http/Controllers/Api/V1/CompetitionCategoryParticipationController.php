@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\ParticipationTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Models\CompetitionCategory;
 use App\Models\CompetitionCategoryParticipation;
@@ -109,12 +110,11 @@ class CompetitionCategoryParticipationController extends Controller
         $participationId = $participation?->id;
 
         return [
-            'participation_type_id' => [
+            'participation_type' => [
                 $participationId ? 'sometimes' : 'required',
                 'required',
-                'integer',
-                'exists:participation_types,id',
-                Rule::unique('competition_category_participations', 'participation_type_id')
+                Rule::enum(ParticipationTypeEnum::class),
+                Rule::unique('competition_category_participations', 'participation_type')
                     ->where('competition_category_id', $competitionCategory->id)
                     ->ignore($participationId),
             ],

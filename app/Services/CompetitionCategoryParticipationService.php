@@ -14,7 +14,7 @@ class CompetitionCategoryParticipationService
     public function list(CompetitionCategory $competitionCategory, int $perPage = 15): LengthAwarePaginator
     {
         return $competitionCategory->participations()
-            ->with(['competitionCategory', 'participationType'])
+            ->with(['competitionCategory'])
             ->latest()
             ->paginate($perPage);
     }
@@ -28,12 +28,12 @@ class CompetitionCategoryParticipationService
 
         $participation = $competitionCategory->participations()->create($data);
 
-        return $participation->load(['competitionCategory', 'participationType']);
+        return $participation->load(['competitionCategory']);
     }
 
     public function find(CompetitionCategoryParticipation $participation): CompetitionCategoryParticipation
     {
-        return $participation->load(['competitionCategory', 'participationType']);
+        return $participation->load(['competitionCategory']);
     }
 
     /**
@@ -49,7 +49,7 @@ class CompetitionCategoryParticipationService
             $participation->update($data);
         }
 
-        return $participation->fresh()->load(['competitionCategory', 'participationType']);
+        return $participation->fresh()->load(['competitionCategory']);
     }
 
     public function delete(CompetitionCategoryParticipation $participation): void

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Enums\CompetitionCategoryStatusEnum;
 use App\Enums\CompetitionStatusEnum;
-use App\Enums\ScoringTypeEnum;
+use App\Enums\CompetitionTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Competition;
 use App\Services\CompetitionService;
@@ -83,17 +83,16 @@ class CompetitionController extends Controller
             'event_id' => $competitionId
                 ? ['sometimes', 'required', 'integer', 'exists:events,id']
                 : ['required', 'integer', 'exists:events,id'],
-            'competition_type_id' => $competitionId
-                ? ['sometimes', 'required', 'integer', 'exists:competition_types,id']
-                : ['required', 'integer', 'exists:competition_types,id'],
+            'competition_type' => $competitionId
+                ? ['sometimes', 'required', Rule::enum(CompetitionTypeEnum::class)]
+                : ['required', Rule::enum(CompetitionTypeEnum::class)],
             'name' => $competitionId
                 ? ['sometimes', 'required', 'string', 'max:255']
                 : ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'scoring_type' => ['nullable', Rule::enum(ScoringTypeEnum::class)],
             'status' => ['nullable', Rule::enum(CompetitionStatusEnum::class)],
 
-            //Competition Categories
+            // Competition Categories
             'competition_categories' => ['nullable', 'array'],
             'competition_categories.*.id' => [
                 'nullable',
@@ -103,8 +102,6 @@ class CompetitionController extends Controller
                     : 'prohibited',
             ],
             'competition_categories.*.name' => ['required', 'string', 'max:255'],
-            'competition_categories.*.min_age' => ['required', 'integer', 'min:0', 'max:150'],
-            'competition_categories.*.max_age' => ['required', 'integer', 'min:0', 'max:150', 'gte:competition_categories.*.min_age'],
             'competition_categories.*.status' => ['nullable', Rule::enum(CompetitionCategoryStatusEnum::class)],
         ];
     }

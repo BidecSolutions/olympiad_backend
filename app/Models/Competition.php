@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\CompetitionStatusEnum;
-use App\Enums\ScoringTypeEnum;
+use App\Enums\CompetitionTypeEnum;
 use Database\Factories\CompetitionFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,10 +13,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
     'event_id',
-    'competition_type_id',
+    'competition_type',
     'name',
     'description',
-    'scoring_type',
     'status',
 ])]
 class Competition extends Model
@@ -28,7 +27,7 @@ class Competition extends Model
      * @var array<string, mixed>
      */
     protected $attributes = [
-        'scoring_type' => 'points',
+        'competition_type' => 'academic',
         'status' => 'draft',
     ];
 
@@ -38,7 +37,7 @@ class Competition extends Model
     protected function casts(): array
     {
         return [
-            'scoring_type' => ScoringTypeEnum::class,
+            'competition_type' => CompetitionTypeEnum::class,
             'status' => CompetitionStatusEnum::class,
         ];
     }
@@ -49,14 +48,6 @@ class Competition extends Model
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
-    }
-
-    /**
-     * @return BelongsTo<CompetitionType, $this>
-     */
-    public function competitionType(): BelongsTo
-    {
-        return $this->belongsTo(CompetitionType::class);
     }
 
     /**

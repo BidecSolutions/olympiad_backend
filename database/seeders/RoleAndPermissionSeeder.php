@@ -4,8 +4,8 @@ namespace Database\Seeders;
 
 use App\Enums\PermissionsEnum;
 use App\Enums\RolesEnum;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
@@ -50,13 +50,6 @@ class RoleAndPermissionSeeder extends Seeder
                 'Edit' => PermissionsEnum::OfficialsPatch,
                 'Delete' => PermissionsEnum::OfficialsDestroy,
             ],
-            'Competition Types' => [
-                'List' => PermissionsEnum::CompetitionTypesList,
-                'Create' => PermissionsEnum::CompetitionTypesStore,
-                'View' => PermissionsEnum::CompetitionTypesShow,
-                'Edit' => PermissionsEnum::CompetitionTypesPatch,
-                'Delete' => PermissionsEnum::CompetitionTypesDestroy,
-            ],
             'Competitions' => [
                 'List' => PermissionsEnum::CompetitionsList,
                 'Create' => PermissionsEnum::CompetitionsStore,
@@ -70,13 +63,6 @@ class RoleAndPermissionSeeder extends Seeder
                 'View' => PermissionsEnum::CompetitionCategoriesShow,
                 'Edit' => PermissionsEnum::CompetitionCategoriesPatch,
                 'Delete' => PermissionsEnum::CompetitionCategoriesDestroy,
-            ],
-            'Participation Types' => [
-                'List' => PermissionsEnum::ParticipationTypesList,
-                'Create' => PermissionsEnum::ParticipationTypesStore,
-                'View' => PermissionsEnum::ParticipationTypesShow,
-                'Edit' => PermissionsEnum::ParticipationTypesPatch,
-                'Delete' => PermissionsEnum::ParticipationTypesDestroy,
             ],
             'Category Participations' => [
                 'List' => PermissionsEnum::CompetitionCategoryParticipationsList,

@@ -17,14 +17,9 @@ class CompetitionCategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $minAge = fake()->numberBetween(6, 14);
-        $maxAge = fake()->numberBetween($minAge + 1, 18);
-
         return [
             'competition_id' => Competition::factory(),
             'name' => fake()->words(2, true),
-            'min_age' => $minAge,
-            'max_age' => $maxAge,
             'status' => CompetitionCategoryStatusEnum::Active,
         ];
     }

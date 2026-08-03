@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ParticipationTypeEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,22 +16,17 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('competition_category_id');
-            $table->foreignId('participation_type_id');
+            $table->string('participation_type')->default(ParticipationTypeEnum::Individual->value)->index();
 
             $table->foreign('competition_category_id', 'ccp_category_fk')
                 ->references('id')
                 ->on('competition_categories')
                 ->cascadeOnDelete();
 
-            $table->foreign('participation_type_id', 'ccp_participation_fk')
-                ->references('id')
-                ->on('participation_types')
-                ->cascadeOnDelete();
-
             $table->timestamps();
 
             $table->unique(
-                ['competition_category_id', 'participation_type_id'],
+                ['competition_category_id', 'participation_type'],
                 'category_participation_unique'
             );
         });

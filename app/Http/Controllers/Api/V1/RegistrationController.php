@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Enums\CompetitionCategoryStatusEnum;
 use App\Enums\CompetitionStatusEnum;
-use App\Enums\ParticipationTypeStatusEnum;
+use App\Enums\ParticipationTypeEnum;
 use App\Enums\RegistrationStatusEnum;
 use App\Enums\SchoolStatusEnum;
 use App\Enums\StudentStatusEnum;
@@ -200,7 +200,6 @@ class RegistrationController extends Controller
 
         $participation = CompetitionCategoryParticipation::query()
             ->with([
-                'participationType',
                 'competitionCategory.competition',
             ])
             ->find($participationId);
@@ -211,7 +210,7 @@ class RegistrationController extends Controller
 
         $category = $participation->competitionCategory;
         $competition = $category?->competition;
-        $participationType = $participation->participationType;
+        $participationType = $participation->participation_type;
 
         if ($category === null || $competition === null || $participationType === null) {
             $validator->errors()->add(
@@ -236,23 +235,14 @@ class RegistrationController extends Controller
             );
         }
 
-        if ($participationType->status !== ParticipationTypeStatusEnum::Active) {
-            $validator->errors()->add(
-                'competition_category_participation_id',
-                'Registrations are not allowed for inactive participation types.',
-            );
-        }
-
-        $participationTypeName = strtolower($participationType->name);
-
-        if ($studentId !== null && $participationTypeName !== 'individual') {
+        if ($studentId !== null && $participationType !== ParticipationTypeEnum::Individual) {
             $validator->errors()->add(
                 'student_id',
                 'Individual registration requires an individual participation type.',
             );
         }
 
-        if ($teamId !== null && $participationTypeName !== 'team') {
+        if ($teamId !== null && $participationType !== ParticipationTypeEnum::Team) {
             $validator->errors()->add(
                 'team_id',
                 'Team registration requires a team participation type.',

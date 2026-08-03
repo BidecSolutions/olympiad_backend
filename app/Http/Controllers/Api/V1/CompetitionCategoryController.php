@@ -98,12 +98,6 @@ class CompetitionCategoryController extends Controller
             'name' => $competitionCategoryId
                 ? ['sometimes', 'required', 'string', 'max:255']
                 : ['required', 'string', 'max:255'],
-            'min_age' => $competitionCategoryId
-                ? ['sometimes', 'required', 'integer', 'min:0', 'max:150']
-                : ['required', 'integer', 'min:0', 'max:150'],
-            'max_age' => $competitionCategoryId
-                ? ['sometimes', 'required', 'integer', 'min:0', 'max:150', 'gte:min_age']
-                : ['required', 'integer', 'min:0', 'max:150', 'gte:min_age'],
             'status' => ['nullable', Rule::enum(CompetitionCategoryStatusEnum::class)],
         ];
     }

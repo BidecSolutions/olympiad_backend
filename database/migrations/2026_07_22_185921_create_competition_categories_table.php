@@ -16,8 +16,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('competition_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->unsignedSmallInteger('min_age');
-            $table->unsignedSmallInteger('max_age');
             $table->string('status')->default(CompetitionCategoryStatusEnum::Active->value)->index();
             $table->timestamps();
         });

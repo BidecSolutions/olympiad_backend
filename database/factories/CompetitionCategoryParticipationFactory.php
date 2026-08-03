@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Enums\ParticipationTypeEnum;
 use App\Models\CompetitionCategory;
 use App\Models\CompetitionCategoryParticipation;
-use App\Models\ParticipationType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +19,7 @@ class CompetitionCategoryParticipationFactory extends Factory
     {
         return [
             'competition_category_id' => CompetitionCategory::factory(),
-            'participation_type_id' => ParticipationType::factory(),
+            'participation_type' => fake()->randomElement(ParticipationTypeEnum::cases()),
         ];
     }
 }

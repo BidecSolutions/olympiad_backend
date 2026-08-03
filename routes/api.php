@@ -8,10 +8,8 @@ use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\V1\CompetitionCategoryController;
 use App\Http\Controllers\Api\V1\CompetitionCategoryParticipationController;
 use App\Http\Controllers\Api\V1\CompetitionController;
-use App\Http\Controllers\Api\V1\CompetitionTypeController;
 use App\Http\Controllers\Api\V1\EventController;
 use App\Http\Controllers\Api\V1\OfficialController;
-use App\Http\Controllers\Api\V1\ParticipationTypeController;
 use App\Http\Controllers\Api\V1\RegistrationController;
 use App\Http\Controllers\Api\V1\SchoolController;
 use App\Http\Controllers\Api\V1\StudentController;
@@ -116,30 +114,6 @@ Route::prefix('v1')->group(function () {
         });
 
     // ========================================
-    // [ Competition Type ]
-    // ========================================
-    Route::middleware('auth:sanctum')
-        ->prefix('competition-types')
-        ->controller(CompetitionTypeController::class)
-        ->group(function () {
-
-            Route::get('/', 'index')
-                ->name('api.v1.competition-types.index');
-
-            Route::post('/', 'store')
-                ->name('api.v1.competition-types.store');
-
-            Route::get('/{competitionType}', 'show')
-                ->name('api.v1.competition-types.show');
-
-            Route::patch('/{competitionType}', 'update')
-                ->name('api.v1.competition-types.patch');
-
-            Route::delete('/{competitionType}', 'destroy')
-                ->name('api.v1.competition-types.destroy');
-        });
-
-    // ========================================
     // [ Competition ]
     // ========================================
     Route::middleware('auth:sanctum')
@@ -181,30 +155,6 @@ Route::prefix('v1')->group(function () {
                     Route::delete('/{competitionCategory}', 'destroy')
                         ->name('api.v1.competitions.competition-categories.destroy');
                 });
-        });
-
-    // ========================================
-    // [ Participation Type ]
-    // ========================================
-    Route::middleware('auth:sanctum')
-        ->prefix('participation-types')
-        ->controller(ParticipationTypeController::class)
-        ->group(function () {
-
-            Route::get('/', 'index')
-                ->name('api.v1.participation-types.index');
-
-            Route::post('/', 'store')
-                ->name('api.v1.participation-types.store');
-
-            Route::get('/{participationType}', 'show')
-                ->name('api.v1.participation-types.show');
-
-            Route::patch('/{participationType}', 'update')
-                ->name('api.v1.participation-types.patch');
-
-            Route::delete('/{participationType}', 'destroy')
-                ->name('api.v1.participation-types.destroy');
         });
 
     // ========================================

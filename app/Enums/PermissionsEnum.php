@@ -20,13 +20,6 @@ enum PermissionsEnum: string
     case EventsPatch = 'events.patch';
     case EventsDestroy = 'events.destroy';
 
-    // Competition Types
-    case CompetitionTypesList = 'competition-types.list';
-    case CompetitionTypesStore = 'competition-types.store';
-    case CompetitionTypesShow = 'competition-types.show';
-    case CompetitionTypesPatch = 'competition-types.patch';
-    case CompetitionTypesDestroy = 'competition-types.destroy';
-
     // Competitions
     case CompetitionsList = 'competitions.list';
     case CompetitionsStore = 'competitions.store';
@@ -40,13 +33,6 @@ enum PermissionsEnum: string
     case CompetitionCategoriesShow = 'competitions.competition-categories.show';
     case CompetitionCategoriesPatch = 'competitions.competition-categories.patch';
     case CompetitionCategoriesDestroy = 'competitions.competition-categories.destroy';
-
-    // Participation Types
-    case ParticipationTypesList = 'participation-types.list';
-    case ParticipationTypesStore = 'participation-types.store';
-    case ParticipationTypesShow = 'participation-types.show';
-    case ParticipationTypesPatch = 'participation-types.patch';
-    case ParticipationTypesDestroy = 'participation-types.destroy';
 
     // Competition Category Participations
     case CompetitionCategoryParticipationsList = 'competition-categories.participations.list';

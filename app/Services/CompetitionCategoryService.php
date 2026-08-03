@@ -68,16 +68,12 @@ class CompetitionCategoryService
                 $category = $competition->competitionCategories()->findOrFail($categoryData['id']);
                 $category->update([
                     'name' => $categoryData['name'],
-                    'min_age' => $categoryData['min_age'],
-                    'max_age' => $categoryData['max_age'],
                     'status' => $categoryData['status'] ?? $category->status,
                 ]);
                 $categoryIds[] = $category->id;
             } else {
                 $category = $competition->competitionCategories()->create([
                     'name' => $categoryData['name'],
-                    'min_age' => $categoryData['min_age'],
-                    'max_age' => $categoryData['max_age'],
                     'status' => $categoryData['status'] ?? CompetitionCategoryStatusEnum::Active,
                 ]);
                 $categoryIds[] = $category->id;
