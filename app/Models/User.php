@@ -39,6 +39,22 @@ class User extends Authenticatable
     }
 
     /**
+     * @return array{id: int, name: string, email: string, roles: list<string>, permissions: list<string>}
+     */
+    public function toAuthArray(): array
+    {
+        $this->loadMissing(['roles', 'permissions', 'roles.permissions']);
+
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'roles' => $this->getRoleNames()->values()->all(),
+            'permissions' => $this->getAllPermissions()->pluck('name')->values()->all(),
+        ];
+    }
+
+    /**
      * @return HasMany<SchoolAdmin, $this>
      */
     public function schoolAdmins(): HasMany

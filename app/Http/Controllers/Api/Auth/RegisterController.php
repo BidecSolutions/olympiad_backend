@@ -23,6 +23,7 @@ class RegisterController extends Controller
             'message' => 'Registration successful. Please verify your email.',
             'token' => $token,
             'token_type' => 'Bearer',
+            'user' => $user->toAuthArray(),
         ], 201);
     }
 }

@@ -31,6 +31,7 @@ class LoginController extends Controller
             'message' => 'Login successful.',
             'token' => $token,
             'token_type' => 'Bearer',
+            'user' => $user->toAuthArray(),
         ], 200);
     }
 }
