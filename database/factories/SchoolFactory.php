@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\SchoolStatusEnum;
 use App\Models\School;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,11 +17,18 @@ class SchoolFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->company().' School';
+        $email = fake()->unique()->companyEmail();
+
         return [
+            'user_id' => User::factory()->state([
+                'name' => $name,
+                'email' => $email,
+            ]),
             'school_code' => fake()->unique()->bothify('SCH-####'),
-            'name' => fake()->company().' School',
+            'name' => $name,
             'registration_no' => fake()->unique()->numerify('REG-######'),
-            'email' => fake()->unique()->companyEmail(),
+            'email' => $email,
             'phone' => fake()->phoneNumber(),
             'address' => fake()->streetAddress(),
             'city' => fake()->city(),

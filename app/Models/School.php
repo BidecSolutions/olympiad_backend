@@ -7,9 +7,11 @@ use Database\Factories\SchoolFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
+    'user_id',
     'school_code',
     'name',
     'registration_no',
@@ -42,19 +44,19 @@ class School extends Model
     }
 
     /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * @return HasMany<SchoolDocument, $this>
      */
     public function documents(): HasMany
     {
         return $this->hasMany(SchoolDocument::class);
-    }
-
-    /**
-     * @return HasMany<SchoolAdmin, $this>
-     */
-    public function admins(): HasMany
-    {
-        return $this->hasMany(SchoolAdmin::class);
     }
 
     /**

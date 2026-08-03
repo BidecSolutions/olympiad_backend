@@ -181,6 +181,10 @@ Route::middleware('auth:sanctum')
 // ========================================
 // [ School ]
 // ========================================
+Route::post('/schools', [SchoolController::class, 'store'])
+    ->middleware('guest:sanctum')
+    ->name('api.schools.store');
+
 Route::middleware('auth:sanctum')
     ->prefix('schools')
     ->controller(SchoolController::class)
@@ -188,9 +192,6 @@ Route::middleware('auth:sanctum')
 
         Route::get('/', 'index')
             ->name('api.schools.index');
-
-        Route::post('/', 'store')
-            ->name('api.schools.store');
 
         Route::get('/{school}', 'show')
             ->name('api.schools.show');

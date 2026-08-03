@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Enums\RolesEnum;
 use App\Models\School;
+use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
@@ -10,7 +12,6 @@ class SchoolService
 {
     public function __construct(
         private SchoolDocumentService $documentService,
-        private SchoolAdminService $adminService,
     ) {}
 
     /**
@@ -19,7 +20,7 @@ class SchoolService
     public function list(int $perPage = 15): LengthAwarePaginator
     {
         return School::query()
-            ->with(['documents', 'admins.user'])
+            ->with(['documents', 'user'])
             ->latest()
             ->paginate($perPage);
     }
@@ -30,26 +31,34 @@ class SchoolService
     public function create(array $data): School
     {
         $documents = $data['documents'] ?? null;
-        $admins = $data['admins'] ?? null;
-        unset($data['documents'], $data['admins']);
+        $password = $data['password'];
+        unset($data['documents'], $data['password'], $data['password_confirmation']);
 
-        if (is_array($documents) || is_array($admins)) {
-            return DB::transaction(fn (): School => $this->persistSchool(
-                school: null,
-                data: $data,
-                documents: $documents,
-                admins: $admins,
-            ));
-        }
+        return DB::transaction(function () use ($data, $documents, $password): School {
+            $user = User::query()->create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => $password,
+            ]);
 
-        $school = School::create($data);
+            $user->assignRole(RolesEnum::SchoolAdmin);
 
-        return $school->load(['documents', 'admins.user']);
+            $school = School::query()->create([
+                ...$data,
+                'user_id' => $user->id,
+            ]);
+
+            if (is_array($documents)) {
+                $this->documentService->syncForSchool($school, $documents);
+            }
+
+            return $school->fresh()->load(['documents', 'user']);
+        });
     }
 
     public function find(School $school): School
     {
-        return $school->load(['documents', 'admins.user']);
+        return $school->load(['documents', 'user']);
     }
 
     /**
@@ -58,63 +67,48 @@ class SchoolService
     public function update(School $school, array $data): School
     {
         $documents = array_key_exists('documents', $data) ? $data['documents'] : null;
-        $admins = array_key_exists('admins', $data) ? $data['admins'] : null;
-        unset($data['documents'], $data['admins']);
+        $password = $data['password'] ?? null;
+        unset($data['documents'], $data['password'], $data['password_confirmation']);
 
-        $hasRelatedChanges = is_array($documents) || is_array($admins);
-        $hasSchoolChanges = $data !== [];
+        return DB::transaction(function () use ($school, $data, $documents, $password): School {
+            if ($data !== []) {
+                $school->update($data);
+            }
 
-        if ($hasRelatedChanges && $hasSchoolChanges) {
-            return DB::transaction(fn (): School => $this->persistSchool(
-                school: $school,
-                data: $data,
-                documents: $documents,
-                admins: $admins,
-            ));
-        }
+            $userUpdates = [];
 
-        if ($hasRelatedChanges) {
-            return DB::transaction(fn (): School => $this->persistSchool(
-                school: $school,
-                data: [],
-                documents: $documents,
-                admins: $admins,
-            ));
-        }
+            if (array_key_exists('name', $data)) {
+                $userUpdates['name'] = $data['name'];
+            }
 
-        if ($hasSchoolChanges) {
-            $school->update($data);
-        }
+            if (array_key_exists('email', $data)) {
+                $userUpdates['email'] = $data['email'];
+            }
 
-        return $school->fresh()->load(['documents', 'admins.user']);
+            if (is_string($password) && $password !== '') {
+                $userUpdates['password'] = $password;
+            }
+
+            if ($userUpdates !== []) {
+                $school->user?->update($userUpdates);
+            }
+
+            if (is_array($documents)) {
+                $this->documentService->syncForSchool($school, $documents);
+            }
+
+            return $school->fresh()->load(['documents', 'user']);
+        });
     }
 
     public function delete(School $school): void
     {
-        $school->delete();
-    }
+        DB::transaction(function () use ($school): void {
+            $user = $school->user;
 
-    /**
-     * @param  array<string, mixed>  $data
-     * @param  list<array<string, mixed>>|null  $documents
-     * @param  list<array<string, mixed>>|null  $admins
-     */
-    private function persistSchool(?School $school, array $data, ?array $documents, ?array $admins): School
-    {
-        if ($school === null) {
-            $school = School::create($data);
-        } elseif ($data !== []) {
-            $school->update($data);
-        }
+            $school->delete();
 
-        if (is_array($documents)) {
-            $this->documentService->syncForSchool($school, $documents);
-        }
-
-        if (is_array($admins)) {
-            $this->adminService->syncForSchool($school, $admins);
-        }
-
-        return $school->fresh()->load(['documents', 'admins.user']);
+            $user?->delete();
+        });
     }
 }

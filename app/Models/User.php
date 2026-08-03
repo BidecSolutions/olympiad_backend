@@ -55,11 +55,11 @@ class User extends Authenticatable
     }
 
     /**
-     * @return HasMany<SchoolAdmin, $this>
+     * @return HasOne<School, $this>
      */
-    public function schoolAdmins(): HasMany
+    public function school(): HasOne
     {
-        return $this->hasMany(SchoolAdmin::class);
+        return $this->hasOne(School::class);
     }
 
     /**

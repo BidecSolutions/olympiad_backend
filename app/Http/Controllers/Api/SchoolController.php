@@ -11,6 +11,7 @@ use App\Services\SchoolService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class SchoolController extends Controller
 {
@@ -35,7 +36,7 @@ class SchoolController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'School created successfully.',
+            'message' => 'School registered successfully.',
             'data' => $school,
         ], 201);
     }
@@ -78,6 +79,7 @@ class SchoolController extends Controller
     private function schoolPayloadRules(?School $school = null): array
     {
         $schoolId = $school?->id;
+        $userId = $school?->user_id;
 
         return [
             'school_code' => [
@@ -93,8 +95,26 @@ class SchoolController extends Controller
                 : ['required', 'string', 'max:255'],
             'registration_no' => ['nullable', 'string', 'max:255'],
             'email' => $schoolId
-                ? ['sometimes', 'required', 'string', 'email', 'max:255', Rule::unique('schools', 'email')->ignore($schoolId)]
-                : ['required', 'string', 'email', 'max:255', Rule::unique('schools', 'email')],
+                ? [
+                    'sometimes',
+                    'required',
+                    'string',
+                    'email',
+                    'max:255',
+                    Rule::unique('schools', 'email')->ignore($schoolId),
+                    Rule::unique('users', 'email')->ignore($userId),
+                ]
+                : [
+                    'required',
+                    'string',
+                    'email',
+                    'max:255',
+                    Rule::unique('schools', 'email'),
+                    Rule::unique('users', 'email'),
+                ],
+            'password' => $schoolId
+                ? ['sometimes', 'nullable', 'string', 'confirmed', Password::defaults()]
+                : ['required', 'string', 'confirmed', Password::defaults()],
             'phone' => ['nullable', 'string', 'max:255'],
             'address' => ['nullable', 'string'],
             'city' => ['nullable', 'string', 'max:255'],
@@ -110,15 +130,6 @@ class SchoolController extends Controller
             'documents.*.document_type' => ['required', Rule::enum(SchoolDocumentTypeEnum::class)],
             'documents.*.file_path' => ['required', 'string', 'max:255'],
             'documents.*.status' => ['nullable', Rule::enum(SchoolDocumentStatusEnum::class)],
-            'admins' => ['nullable', 'array'],
-            'admins.*.id' => [
-                'nullable',
-                'integer',
-                $schoolId
-                    ? Rule::exists('school_admins', 'id')->where('school_id', $schoolId)
-                    : 'prohibited',
-            ],
-            'admins.*.user_id' => ['required', 'integer', 'exists:users,id', 'distinct'],
         ];
     }
 }
