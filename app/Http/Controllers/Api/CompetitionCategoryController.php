@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Enums\CompetitionCategoryStatusEnum;
+use App\Enums\ParticipationTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Competition;
 use App\Models\CompetitionCategory;
@@ -99,6 +100,21 @@ class CompetitionCategoryController extends Controller
                 ? ['sometimes', 'required', 'string', 'max:255']
                 : ['required', 'string', 'max:255'],
             'status' => ['nullable', Rule::enum(CompetitionCategoryStatusEnum::class)],
+
+            // Participations
+            'participations' => ['nullable', 'array'],
+            'participations.*.id' => [
+                'nullable',
+                'integer',
+                $competitionCategoryId
+                    ? Rule::exists('competition_category_participations', 'id')
+                        ->where('competition_category_id', $competitionCategoryId)
+                    : 'prohibited',
+            ],
+            'participations.*.participation_type' => [
+                'required',
+                Rule::enum(ParticipationTypeEnum::class),
+            ],
         ];
     }
 }

@@ -56,4 +56,35 @@ class CompetitionCategoryParticipationService
     {
         $participation->delete();
     }
+
+    /**
+     * @param  list<array<string, mixed>>  $participations
+     */
+    public function syncForCategory(CompetitionCategory $competitionCategory, array $participations): void
+    {
+        $participationIds = [];
+
+        foreach ($participations as $participationData) {
+            if (! empty($participationData['id'])) {
+                $participation = $competitionCategory->participations()->findOrFail($participationData['id']);
+                $participation->update([
+                    'participation_type' => $participationData['participation_type'],
+                ]);
+                $participationIds[] = $participation->id;
+            } else {
+                $participation = $competitionCategory->participations()->create([
+                    'participation_type' => $participationData['participation_type'],
+                ]);
+                $participationIds[] = $participation->id;
+            }
+        }
+
+        if ($participationIds === []) {
+            $competitionCategory->participations()->delete();
+
+            return;
+        }
+
+        $competitionCategory->participations()->whereNotIn('id', $participationIds)->delete();
+    }
 }

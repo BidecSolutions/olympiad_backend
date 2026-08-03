@@ -666,7 +666,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"event_id\": {{event_id}},\n    \"competition_type\": \"{{competition_type}}\",\n    \"name\": \"Mathematics Olympiad\",\n    \"description\": \"Mathematics competition for all age groups.\",\n    \"status\": \"draft\",\n    \"competition_categories\": [\n        {\n            \"name\": \"Junior\",\n            \"status\": \"active\"\n        },\n        {\n            \"name\": \"Senior\",\n            \"status\": \"active\"\n        }\n    ]\n}"
+                            "raw": "{\n    \"event_id\": {{event_id}},\n    \"competition_type\": \"{{competition_type}}\",\n    \"name\": \"Mathematics Olympiad\",\n    \"description\": \"Mathematics competition for all age groups.\",\n    \"status\": \"draft\",\n    \"competition_categories\": [\n        {\n            \"name\": \"Junior\",\n            \"status\": \"active\",\n            \"participations\": [\n                { \"participation_type\": \"individual\" },\n                { \"participation_type\": \"team\" }\n            ]\n        },\n        {\n            \"name\": \"Senior\",\n            \"status\": \"active\",\n            \"participations\": [\n                { \"participation_type\": \"individual\" }\n            ]\n        }\n    ]\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/competitions",
@@ -735,7 +735,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Mathematics Olympiad Updated\",\n    \"status\": \"active\",\n    \"competition_categories\": [\n        {\n            \"id\": {{competition_category_id}},\n            \"name\": \"Junior Updated\",\n            \"status\": \"active\"\n        },\n        {\n            \"name\": \"Senior\",\n            \"status\": \"active\"\n        }\n    ]\n}"
+                            "raw": "{\n    \"name\": \"Mathematics Olympiad Updated\",\n    \"status\": \"active\",\n    \"competition_categories\": [\n        {\n            \"id\": {{competition_category_id}},\n            \"name\": \"Junior Updated\",\n            \"status\": \"active\",\n            \"participations\": [\n                { \"id\": {{participation_id}}, \"participation_type\": \"individual\" },\n                { \"participation_type\": \"team\" }\n            ]\n        },\n        {\n            \"name\": \"Senior\",\n            \"status\": \"active\",\n            \"participations\": [\n                { \"participation_type\": \"individual\" }\n            ]\n        }\n    ]\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/competitions/{{competition_id}}",
@@ -818,7 +818,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Junior\",\n    \"status\": \"active\"\n}"
+                            "raw": "{\n    \"name\": \"Junior\",\n    \"status\": \"active\",\n    \"participations\": [\n        { \"participation_type\": \"individual\" },\n        { \"participation_type\": \"team\" }\n    ]\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/competitions/{{competition_id}}/competition-categories",
@@ -891,7 +891,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Junior Updated\",\n    \"status\": \"active\"\n}"
+                            "raw": "{\n    \"name\": \"Junior Updated\",\n    \"status\": \"active\",\n    \"participations\": [\n        { \"id\": {{participation_id}}, \"participation_type\": \"individual\" },\n        { \"participation_type\": \"team\" }\n    ]\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/competitions/{{competition_id}}/competition-categories/{{competition_category_id}}",
