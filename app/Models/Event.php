@@ -12,8 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable([
     'name',
     'description',
-    'start_date',
-    'end_date',
+    'year',
     'status',
     'created_by',
 ])]
@@ -35,8 +34,7 @@ class Event extends Model
     protected function casts(): array
     {
         return [
-            'start_date' => 'date',
-            'end_date' => 'date',
+            'year' => 'integer',
             'status' => EventStatusEnum::class,
         ];
     }

@@ -16,8 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->unsignedSmallInteger('year')->index();
             $table->string('status')->default(EventStatusEnum::Draft->value)->index();
             $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
             $table->timestamps();

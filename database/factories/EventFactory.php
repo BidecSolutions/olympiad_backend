@@ -17,14 +17,10 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
-        $startDate = fake()->dateTimeBetween('now', '+1 month');
-        $endDate = fake()->dateTimeBetween($startDate, '+2 months');
-
         return [
             'name' => fake()->words(3, true),
             'description' => fake()->optional()->paragraph(),
-            'start_date' => $startDate,
-            'end_date' => $endDate,
+            'year' => (int) fake()->year(),
             'status' => EventStatusEnum::Draft,
             'created_by' => User::factory(),
         ];

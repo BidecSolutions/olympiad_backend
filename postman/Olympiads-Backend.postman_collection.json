@@ -91,12 +91,11 @@
                             "raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password\",\n    \"password_confirmation\": \"password\"\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/auth/register",
+                            "raw": "{{base_url}}/auth/register",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "auth",
                                 "register"
                             ]
@@ -142,12 +141,11 @@
                             "raw": "{\n    \"email\": \"john@example.com\",\n    \"password\": \"password\"\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/auth/login",
+                            "raw": "{{base_url}}/auth/login",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "auth",
                                 "login"
                             ]
@@ -182,12 +180,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/auth/logout",
+                            "raw": "{{base_url}}/auth/logout",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "auth",
                                 "logout"
                             ]
@@ -217,12 +214,11 @@
                             "raw": "{\n    \"email\": \"john@example.com\"\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/auth/forgot-password",
+                            "raw": "{{base_url}}/auth/forgot-password",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "auth",
                                 "forgot-password"
                             ]
@@ -252,12 +248,11 @@
                             "raw": "{\n    \"token\": \"reset-token-from-email\",\n    \"email\": \"john@example.com\",\n    \"password\": \"newpassword\",\n    \"password_confirmation\": \"newpassword\"\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/auth/reset-password",
+                            "raw": "{{base_url}}/auth/reset-password",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "auth",
                                 "reset-password"
                             ]
@@ -276,12 +271,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/auth/email/verification-notification",
+                            "raw": "{{base_url}}/auth/email/verification-notification",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "auth",
                                 "email",
                                 "verification-notification"
@@ -304,12 +298,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/auth/email/verify/1/hash-from-email?expires=1234567890&signature=example",
+                            "raw": "{{base_url}}/auth/email/verify/1/hash-from-email?expires=1234567890&signature=example",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "auth",
                                 "email",
                                 "verify",
@@ -346,12 +339,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/schools",
+                            "raw": "{{base_url}}/schools",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools"
                             ]
                         }
@@ -377,12 +369,11 @@
                             "raw": "{\n    \"name\": \"ABC School\",\n    \"email\": \"school@example.com\",\n    \"registration_no\": \"REG-123456\",\n    \"phone\": \"+923001234567\",\n    \"address\": \"123 Main Street\",\n    \"city\": \"Karachi\",\n    \"status\": \"pending\",\n    \"documents\": [\n        {\n            \"document_type\": \"cambridge_affiliation\",\n            \"file_path\": \"school-documents/cert.pdf\",\n            \"status\": \"pending\"\n        }\n    ],\n    \"admins\": [\n        {\n            \"user_id\": 1\n        }\n    ]\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/schools",
+                            "raw": "{{base_url}}/schools",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools"
                             ]
                         }
@@ -416,12 +407,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}",
+                            "raw": "{{base_url}}/schools/{{school_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}"
                             ]
@@ -448,12 +438,11 @@
                             "raw": "{\n    \"name\": \"ABC School Updated\",\n    \"city\": \"Lahore\",\n    \"status\": \"approved\",\n    \"documents\": [\n        {\n            \"id\": 1,\n            \"document_type\": \"cambridge_affiliation\",\n            \"file_path\": \"school-documents/cert-v2.pdf\",\n            \"status\": \"approved\"\n        },\n        {\n            \"document_type\": \"matriculation_board\",\n            \"file_path\": \"school-documents/board.pdf\",\n            \"status\": \"pending\"\n        }\n    ],\n    \"admins\": [\n        {\n            \"id\": 1,\n            \"user_id\": 1\n        },\n        {\n            \"user_id\": 2\n        }\n    ]\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}",
+                            "raw": "{{base_url}}/schools/{{school_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}"
                             ]
@@ -472,12 +461,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}",
+                            "raw": "{{base_url}}/schools/{{school_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}"
                             ]
@@ -501,12 +489,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/events",
+                            "raw": "{{base_url}}/events",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "events"
                             ]
                         }
@@ -529,15 +516,14 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"National Olympiad 2026\",\n    \"description\": \"Annual national olympiad event.\",\n    \"start_date\": \"2026-08-01\",\n    \"end_date\": \"2026-08-15\",\n    \"status\": \"draft\"\n}"
+                            "raw": "{\n    \"name\": \"National Olympiad 2026\",\n    \"description\": \"Annual national olympiad event.\",\n    \"year\": 2026,\n    \"status\": \"draft\"\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/events",
+                            "raw": "{{base_url}}/events",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "events"
                             ]
                         }
@@ -571,12 +557,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/events/{{event_id}}",
+                            "raw": "{{base_url}}/events/{{event_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "events",
                                 "{{event_id}}"
                             ]
@@ -603,12 +588,11 @@
                             "raw": "{\n    \"name\": \"National Olympiad 2026 Updated\",\n    \"status\": \"active\"\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/events/{{event_id}}",
+                            "raw": "{{base_url}}/events/{{event_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "events",
                                 "{{event_id}}"
                             ]
@@ -627,12 +611,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/events/{{event_id}}",
+                            "raw": "{{base_url}}/events/{{event_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "events",
                                 "{{event_id}}"
                             ]
@@ -656,12 +639,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/competitions",
+                            "raw": "{{base_url}}/competitions",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "competitions"
                             ]
                         }
@@ -687,12 +669,11 @@
                             "raw": "{\n    \"event_id\": {{event_id}},\n    \"competition_type\": \"{{competition_type}}\",\n    \"name\": \"Mathematics Olympiad\",\n    \"description\": \"Mathematics competition for all age groups.\",\n    \"status\": \"draft\",\n    \"competition_categories\": [\n        {\n            \"name\": \"Junior\",\n            \"status\": \"active\"\n        },\n        {\n            \"name\": \"Senior\",\n            \"status\": \"active\"\n        }\n    ]\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/competitions",
+                            "raw": "{{base_url}}/competitions",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "competitions"
                             ]
                         }
@@ -726,12 +707,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/competitions/{{competition_id}}",
+                            "raw": "{{base_url}}/competitions/{{competition_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "competitions",
                                 "{{competition_id}}"
                             ]
@@ -758,12 +738,11 @@
                             "raw": "{\n    \"name\": \"Mathematics Olympiad Updated\",\n    \"status\": \"active\",\n    \"competition_categories\": [\n        {\n            \"id\": {{competition_category_id}},\n            \"name\": \"Junior Updated\",\n            \"status\": \"active\"\n        },\n        {\n            \"name\": \"Senior\",\n            \"status\": \"active\"\n        }\n    ]\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/competitions/{{competition_id}}",
+                            "raw": "{{base_url}}/competitions/{{competition_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "competitions",
                                 "{{competition_id}}"
                             ]
@@ -782,12 +761,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/competitions/{{competition_id}}",
+                            "raw": "{{base_url}}/competitions/{{competition_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "competitions",
                                 "{{competition_id}}"
                             ]
@@ -811,12 +789,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/competitions/{{competition_id}}/competition-categories",
+                            "raw": "{{base_url}}/competitions/{{competition_id}}/competition-categories",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "competitions",
                                 "{{competition_id}}",
                                 "competition-categories"
@@ -844,12 +821,11 @@
                             "raw": "{\n    \"name\": \"Junior\",\n    \"status\": \"active\"\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/competitions/{{competition_id}}/competition-categories",
+                            "raw": "{{base_url}}/competitions/{{competition_id}}/competition-categories",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "competitions",
                                 "{{competition_id}}",
                                 "competition-categories"
@@ -885,12 +861,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/competitions/{{competition_id}}/competition-categories/{{competition_category_id}}",
+                            "raw": "{{base_url}}/competitions/{{competition_id}}/competition-categories/{{competition_category_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "competitions",
                                 "{{competition_id}}",
                                 "competition-categories",
@@ -919,12 +894,11 @@
                             "raw": "{\n    \"name\": \"Junior Updated\",\n    \"status\": \"active\"\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/competitions/{{competition_id}}/competition-categories/{{competition_category_id}}",
+                            "raw": "{{base_url}}/competitions/{{competition_id}}/competition-categories/{{competition_category_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "competitions",
                                 "{{competition_id}}",
                                 "competition-categories",
@@ -945,12 +919,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/competitions/{{competition_id}}/competition-categories/{{competition_category_id}}",
+                            "raw": "{{base_url}}/competitions/{{competition_id}}/competition-categories/{{competition_category_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "competitions",
                                 "{{competition_id}}",
                                 "competition-categories",
@@ -976,12 +949,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/competition-categories/{{competition_category_id}}/participations",
+                            "raw": "{{base_url}}/competition-categories/{{competition_category_id}}/participations",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "competition-categories",
                                 "{{competition_category_id}}",
                                 "participations"
@@ -1009,12 +981,11 @@
                             "raw": "{\n    \"participation_type\": \"{{participation_type}}\"\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/competition-categories/{{competition_category_id}}/participations",
+                            "raw": "{{base_url}}/competition-categories/{{competition_category_id}}/participations",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "competition-categories",
                                 "{{competition_category_id}}",
                                 "participations"
@@ -1050,12 +1021,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/competition-categories/{{competition_category_id}}/participations/{{participation_id}}",
+                            "raw": "{{base_url}}/competition-categories/{{competition_category_id}}/participations/{{participation_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "competition-categories",
                                 "{{competition_category_id}}",
                                 "participations",
@@ -1084,12 +1054,11 @@
                             "raw": "{\n    \"participation_type\": \"{{participation_type}}\"\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/competition-categories/{{competition_category_id}}/participations/{{participation_id}}",
+                            "raw": "{{base_url}}/competition-categories/{{competition_category_id}}/participations/{{participation_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "competition-categories",
                                 "{{competition_category_id}}",
                                 "participations",
@@ -1110,12 +1079,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/competition-categories/{{competition_category_id}}/participations/{{participation_id}}",
+                            "raw": "{{base_url}}/competition-categories/{{competition_category_id}}/participations/{{participation_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "competition-categories",
                                 "{{competition_category_id}}",
                                 "participations",
@@ -1141,12 +1109,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}/students",
+                            "raw": "{{base_url}}/schools/{{school_id}}/students",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}",
                                 "students"
@@ -1174,12 +1141,11 @@
                             "raw": "{\n    \"student_code\": \"STU-1001\",\n    \"name\": \"Ali Khan\",\n    \"father_name\": \"Ahmed Khan\",\n    \"date_of_birth\": \"2010-05-15\",\n    \"gender\": \"male\",\n    \"class\": \"8\",\n    \"section\": \"A\",\n    \"photo\": \"students/ali-khan.jpg\",\n    \"status\": \"active\"\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}/students",
+                            "raw": "{{base_url}}/schools/{{school_id}}/students",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}",
                                 "students"
@@ -1215,12 +1181,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}/students/{{student_id}}",
+                            "raw": "{{base_url}}/schools/{{school_id}}/students/{{student_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}",
                                 "students",
@@ -1249,12 +1214,11 @@
                             "raw": "{\n    \"name\": \"Ali Khan Updated\",\n    \"class\": \"9\",\n    \"section\": \"B\",\n    \"status\": \"blacklisted\",\n    \"blacklist_reason\": \"Violation of competition rules.\"\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}/students/{{student_id}}",
+                            "raw": "{{base_url}}/schools/{{school_id}}/students/{{student_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}",
                                 "students",
@@ -1275,12 +1239,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}/students/{{student_id}}",
+                            "raw": "{{base_url}}/schools/{{school_id}}/students/{{student_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}",
                                 "students",
@@ -1306,12 +1269,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}/teams",
+                            "raw": "{{base_url}}/schools/{{school_id}}/teams",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}",
                                 "teams"
@@ -1339,12 +1301,11 @@
                             "raw": "{\n    \"name\": \"Science Team A\",\n    \"status\": \"active\",\n    \"members\": [\n        {\n            \"student_id\": {{student_id}}\n        }\n    ]\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}/teams",
+                            "raw": "{{base_url}}/schools/{{school_id}}/teams",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}",
                                 "teams"
@@ -1383,12 +1344,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}",
+                            "raw": "{{base_url}}/schools/{{school_id}}/teams/{{team_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}",
                                 "teams",
@@ -1417,12 +1377,11 @@
                             "raw": "{\n    \"name\": \"Science Team A Updated\",\n    \"status\": \"inactive\",\n    \"members\": [\n        {\n            \"id\": {{team_member_id}},\n            \"student_id\": {{student_id}}\n        },\n        {\n            \"student_id\": 2\n        }\n    ]\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}",
+                            "raw": "{{base_url}}/schools/{{school_id}}/teams/{{team_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}",
                                 "teams",
@@ -1443,12 +1402,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}",
+                            "raw": "{{base_url}}/schools/{{school_id}}/teams/{{team_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}",
                                 "teams",
@@ -1474,12 +1432,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}/members",
+                            "raw": "{{base_url}}/schools/{{school_id}}/teams/{{team_id}}/members",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}",
                                 "teams",
@@ -1509,12 +1466,11 @@
                             "raw": "{\n    \"student_id\": {{student_id}}\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}/members",
+                            "raw": "{{base_url}}/schools/{{school_id}}/teams/{{team_id}}/members",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}",
                                 "teams",
@@ -1552,12 +1508,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}/members/{{team_member_id}}",
+                            "raw": "{{base_url}}/schools/{{school_id}}/teams/{{team_id}}/members/{{team_member_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}",
                                 "teams",
@@ -1588,12 +1543,11 @@
                             "raw": "{\n    \"student_id\": {{student_id}}\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}/members/{{team_member_id}}",
+                            "raw": "{{base_url}}/schools/{{school_id}}/teams/{{team_id}}/members/{{team_member_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}",
                                 "teams",
@@ -1616,12 +1570,11 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/v1/schools/{{school_id}}/teams/{{team_id}}/members/{{team_member_id}}",
+                            "raw": "{{base_url}}/schools/{{school_id}}/teams/{{team_id}}/members/{{team_member_id}}",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
-                                "v1",
                                 "schools",
                                 "{{school_id}}",
                                 "teams",

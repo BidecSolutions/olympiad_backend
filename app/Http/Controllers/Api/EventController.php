@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api;
 
 use App\Enums\EventStatusEnum;
 use App\Http\Controllers\Controller;
@@ -82,12 +82,9 @@ class EventController extends Controller
                 ? ['sometimes', 'required', 'string', 'max:255']
                 : ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'start_date' => $eventId
-                ? ['sometimes', 'required', 'date']
-                : ['required', 'date'],
-            'end_date' => $eventId
-                ? ['sometimes', 'required', 'date', 'after_or_equal:start_date']
-                : ['required', 'date', 'after_or_equal:start_date'],
+            'year' => $eventId
+                ? ['sometimes', 'required', 'integer', 'min:2000', 'max:2100']
+                : ['required', 'integer', 'min:2000', 'max:2100'],
             'status' => ['nullable', Rule::enum(EventStatusEnum::class)],
         ];
     }
