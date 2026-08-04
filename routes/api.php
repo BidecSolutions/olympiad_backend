@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\Auth\PasswordController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\CompetitionCategoryController;
-use App\Http\Controllers\Api\CompetitionCategoryParticipationController;
 use App\Http\Controllers\Api\CompetitionController;
 use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\OfficialController;
@@ -153,30 +152,6 @@ Route::middleware('auth:sanctum')
                 Route::delete('/{competitionCategory}', 'destroy')
                     ->name('api.competitions.competition-categories.destroy');
             });
-    });
-
-// ========================================
-// [ Competition Category Participation ]
-// ========================================
-Route::middleware('auth:sanctum')
-    ->prefix('competition-categories/{competitionCategory}/participations')
-    ->controller(CompetitionCategoryParticipationController::class)
-    ->group(function () {
-
-        Route::get('/', 'index')
-            ->name('api.competition-categories.participations.index');
-
-        Route::post('/', 'store')
-            ->name('api.competition-categories.participations.store');
-
-        Route::get('/{participation}', 'show')
-            ->name('api.competition-categories.participations.show');
-
-        Route::patch('/{participation}', 'update')
-            ->name('api.competition-categories.participations.patch');
-
-        Route::delete('/{participation}', 'destroy')
-            ->name('api.competition-categories.participations.destroy');
     });
 
 // ========================================

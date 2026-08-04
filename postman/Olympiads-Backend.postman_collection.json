@@ -57,10 +57,6 @@
             "value": "individual"
         },
         {
-            "key": "participation_id",
-            "value": "1"
-        },
-        {
             "key": "team_id",
             "value": "1"
         },
@@ -833,7 +829,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"event_id\": {{event_id}},\n    \"competition_type\": \"{{competition_type}}\",\n    \"name\": \"Mathematics Olympiad\",\n    \"description\": \"Mathematics competition for all age groups.\",\n    \"status\": \"draft\",\n    \"competition_categories\": [\n        {\n            \"name\": \"Junior\",\n            \"status\": \"active\",\n            \"participations\": [\n                { \"participation_type\": \"individual\" },\n                { \"participation_type\": \"team\" }\n            ]\n        },\n        {\n            \"name\": \"Senior\",\n            \"status\": \"active\",\n            \"participations\": [\n                { \"participation_type\": \"individual\" }\n            ]\n        }\n    ]\n}"
+                            "raw": "{\n    \"event_id\": {{event_id}},\n    \"competition_type\": \"{{competition_type}}\",\n    \"name\": \"Mathematics Olympiad\",\n    \"description\": \"Mathematics competition for all age groups.\",\n    \"status\": \"draft\",\n    \"competition_categories\": [\n        {\n            \"name\": \"Junior\",\n            \"participation_type\": \"individual\",\n            \"status\": \"active\"\n        },\n        {\n            \"name\": \"Senior\",\n            \"participation_type\": \"team\",\n            \"status\": \"active\"\n        }\n    ]\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/competitions",
@@ -902,7 +898,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Mathematics Olympiad Updated\",\n    \"status\": \"active\",\n    \"competition_categories\": [\n        {\n            \"id\": {{competition_category_id}},\n            \"name\": \"Junior Updated\",\n            \"status\": \"active\",\n            \"participations\": [\n                { \"id\": {{participation_id}}, \"participation_type\": \"individual\" },\n                { \"participation_type\": \"team\" }\n            ]\n        },\n        {\n            \"name\": \"Senior\",\n            \"status\": \"active\",\n            \"participations\": [\n                { \"participation_type\": \"individual\" }\n            ]\n        }\n    ]\n}"
+                            "raw": "{\n    \"name\": \"Mathematics Olympiad Updated\",\n    \"status\": \"active\",\n    \"competition_categories\": [\n        {\n            \"id\": {{competition_category_id}},\n            \"name\": \"Junior Updated\",\n            \"participation_type\": \"individual\",\n            \"status\": \"active\"\n        },\n        {\n            \"name\": \"Senior\",\n            \"participation_type\": \"team\",\n            \"status\": \"active\"\n        }\n    ]\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/competitions/{{competition_id}}",
@@ -985,7 +981,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Junior\",\n    \"status\": \"active\",\n    \"participations\": [\n        { \"participation_type\": \"individual\" },\n        { \"participation_type\": \"team\" }\n    ]\n}"
+                            "raw": "{\n    \"name\": \"Junior\",\n    \"participation_type\": \"individual\",\n    \"status\": \"active\"\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/competitions/{{competition_id}}/competition-categories",
@@ -1058,7 +1054,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Junior Updated\",\n    \"status\": \"active\",\n    \"participations\": [\n        { \"id\": {{participation_id}}, \"participation_type\": \"individual\" },\n        { \"participation_type\": \"team\" }\n    ]\n}"
+                            "raw": "{\n    \"name\": \"Junior Updated\",\n    \"participation_type\": \"team\",\n    \"status\": \"active\"\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/competitions/{{competition_id}}/competition-categories/{{competition_category_id}}",
@@ -1095,166 +1091,6 @@
                                 "{{competition_id}}",
                                 "competition-categories",
                                 "{{competition_category_id}}"
-                            ]
-                        }
-                    },
-                    "response": []
-                }
-            ]
-        },
-        {
-            "name": "Competition Category Participation",
-            "item": [
-                {
-                    "name": "List Category Participations",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/competition-categories/{{competition_category_id}}/participations",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "competition-categories",
-                                "{{competition_category_id}}",
-                                "participations"
-                            ]
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Create Category Participation",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"participation_type\": \"{{participation_type}}\"\n}"
-                        },
-                        "url": {
-                            "raw": "{{base_url}}/competition-categories/{{competition_category_id}}/participations",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "competition-categories",
-                                "{{competition_category_id}}",
-                                "participations"
-                            ]
-                        }
-                    },
-                    "response": [],
-                    "event": [
-                        {
-                            "listen": "test",
-                            "script": {
-                                "type": "text/javascript",
-                                "exec": [
-                                    "if (pm.response.code === 201) {",
-                                    "    const json = pm.response.json();",
-                                    "    if (json.data && json.data.id) {",
-                                    "        pm.collectionVariables.set('participation_id', json.data.id);",
-                                    "    }",
-                                    "}"
-                                ]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "Show Category Participation",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/competition-categories/{{competition_category_id}}/participations/{{participation_id}}",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "competition-categories",
-                                "{{competition_category_id}}",
-                                "participations",
-                                "{{participation_id}}"
-                            ]
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Update Category Participation",
-                    "request": {
-                        "method": "PATCH",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"participation_type\": \"{{participation_type}}\"\n}"
-                        },
-                        "url": {
-                            "raw": "{{base_url}}/competition-categories/{{competition_category_id}}/participations/{{participation_id}}",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "competition-categories",
-                                "{{competition_category_id}}",
-                                "participations",
-                                "{{participation_id}}"
-                            ]
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Delete Category Participation",
-                    "request": {
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/competition-categories/{{competition_category_id}}/participations/{{participation_id}}",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "competition-categories",
-                                "{{competition_category_id}}",
-                                "participations",
-                                "{{participation_id}}"
                             ]
                         }
                     },

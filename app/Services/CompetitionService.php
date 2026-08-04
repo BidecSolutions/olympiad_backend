@@ -18,7 +18,7 @@ class CompetitionService
     public function list(int $perPage = 15): LengthAwarePaginator
     {
         return Competition::query()
-            ->with(['event', 'competitionCategories.participations'])
+            ->with(['event', 'competitionCategories'])
             ->latest()
             ->paginate($perPage);
     }
@@ -41,12 +41,12 @@ class CompetitionService
 
         $competition = Competition::create($data);
 
-        return $competition->load(['event', 'competitionCategories.participations']);
+        return $competition->load(['event', 'competitionCategories']);
     }
 
     public function find(Competition $competition): Competition
     {
-        return $competition->load(['event', 'competitionCategories.participations']);
+        return $competition->load(['event', 'competitionCategories']);
     }
 
     /**
@@ -82,7 +82,7 @@ class CompetitionService
             $competition->update($data);
         }
 
-        return $competition->fresh()->load(['event', 'competitionCategories.participations']);
+        return $competition->fresh()->load(['event', 'competitionCategories']);
     }
 
     public function delete(Competition $competition): void
@@ -109,6 +109,6 @@ class CompetitionService
             $this->categoryService->syncForCompetition($competition, $competitionCategories);
         }
 
-        return $competition->fresh()->load(['event', 'competitionCategories.participations']);
+        return $competition->fresh()->load(['event', 'competitionCategories']);
     }
 }

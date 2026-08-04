@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\CompetitionCategoryStatusEnum;
+use App\Enums\ParticipationTypeEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('competition_id')->constrained()->cascadeOnDelete();
             $table->string('name');
+            $table->string('participation_type')->default(ParticipationTypeEnum::Individual->value)->index();
             $table->string('status')->default(CompetitionCategoryStatusEnum::Active->value)->index();
             $table->timestamps();
         });

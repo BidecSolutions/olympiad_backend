@@ -34,13 +34,6 @@ enum PermissionsEnum: string
     case CompetitionCategoriesPatch = 'competitions.competition-categories.patch';
     case CompetitionCategoriesDestroy = 'competitions.competition-categories.destroy';
 
-    // Competition Category Participations
-    case CompetitionCategoryParticipationsList = 'competition-categories.participations.list';
-    case CompetitionCategoryParticipationsStore = 'competition-categories.participations.store';
-    case CompetitionCategoryParticipationsShow = 'competition-categories.participations.show';
-    case CompetitionCategoryParticipationsPatch = 'competition-categories.participations.patch';
-    case CompetitionCategoryParticipationsDestroy = 'competition-categories.participations.destroy';
-
     // Schools
     case SchoolsList = 'schools.list';
     case SchoolsStore = 'schools.store';

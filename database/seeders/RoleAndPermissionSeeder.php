@@ -64,13 +64,6 @@ class RoleAndPermissionSeeder extends Seeder
                 'Edit' => PermissionsEnum::CompetitionCategoriesPatch,
                 'Delete' => PermissionsEnum::CompetitionCategoriesDestroy,
             ],
-            'Category Participations' => [
-                'List' => PermissionsEnum::CompetitionCategoryParticipationsList,
-                'Create' => PermissionsEnum::CompetitionCategoryParticipationsStore,
-                'View' => PermissionsEnum::CompetitionCategoryParticipationsShow,
-                'Edit' => PermissionsEnum::CompetitionCategoryParticipationsPatch,
-                'Delete' => PermissionsEnum::CompetitionCategoryParticipationsDestroy,
-            ],
             'Schools' => [
                 'List' => PermissionsEnum::SchoolsList,
                 'Create' => PermissionsEnum::SchoolsStore,

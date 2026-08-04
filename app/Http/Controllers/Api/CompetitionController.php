@@ -103,21 +103,8 @@ class CompetitionController extends Controller
                     : 'prohibited',
             ],
             'competition_categories.*.name' => ['required', 'string', 'max:255'],
+            'competition_categories.*.participation_type' => ['nullable', Rule::enum(ParticipationTypeEnum::class)],
             'competition_categories.*.status' => ['nullable', Rule::enum(CompetitionCategoryStatusEnum::class)],
-
-            // Category Participations
-            'competition_categories.*.participations' => ['nullable', 'array'],
-            'competition_categories.*.participations.*.id' => [
-                'nullable',
-                'integer',
-                $competitionId
-                    ? 'exists:competition_category_participations,id'
-                    : 'prohibited',
-            ],
-            'competition_categories.*.participations.*.participation_type' => [
-                'required',
-                Rule::enum(ParticipationTypeEnum::class),
-            ],
         ];
     }
 }
