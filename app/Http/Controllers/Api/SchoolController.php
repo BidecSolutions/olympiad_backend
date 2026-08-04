@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\SchoolDocumentStatusEnum;
-use App\Enums\SchoolDocumentTypeEnum;
 use App\Enums\SchoolStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Models\School;
@@ -119,17 +117,6 @@ class SchoolController extends Controller
             'address' => ['nullable', 'string'],
             'city' => ['nullable', 'string', 'max:255'],
             'status' => ['nullable', Rule::enum(SchoolStatusEnum::class)],
-            'documents' => ['nullable', 'array'],
-            'documents.*.id' => [
-                'nullable',
-                'integer',
-                $schoolId
-                    ? Rule::exists('school_documents', 'id')->where('school_id', $schoolId)
-                    : 'prohibited',
-            ],
-            'documents.*.document_type' => ['required', Rule::enum(SchoolDocumentTypeEnum::class)],
-            'documents.*.file_path' => ['required', 'string', 'max:255'],
-            'documents.*.status' => ['nullable', Rule::enum(SchoolDocumentStatusEnum::class)],
         ];
     }
 }

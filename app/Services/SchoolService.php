@@ -10,17 +10,13 @@ use Illuminate\Support\Facades\DB;
 
 class SchoolService
 {
-    public function __construct(
-        private SchoolDocumentService $documentService,
-    ) {}
-
     /**
      * @return LengthAwarePaginator<int, School>
      */
     public function list(int $perPage = 15): LengthAwarePaginator
     {
         return School::query()
-            ->with(['documents', 'user'])
+            ->with('user')
             ->latest()
             ->paginate($perPage);
     }
@@ -30,11 +26,10 @@ class SchoolService
      */
     public function create(array $data): School
     {
-        $documents = $data['documents'] ?? null;
         $password = $data['password'];
-        unset($data['documents'], $data['password'], $data['password_confirmation']);
+        unset($data['password'], $data['password_confirmation']);
 
-        return DB::transaction(function () use ($data, $documents, $password): School {
+        return DB::transaction(function () use ($data, $password): School {
             $user = User::query()->create([
                 'name' => $data['name'],
                 'email' => $data['email'],
@@ -48,17 +43,13 @@ class SchoolService
                 'user_id' => $user->id,
             ]);
 
-            if (is_array($documents)) {
-                $this->documentService->syncForSchool($school, $documents);
-            }
-
-            return $school->fresh()->load(['documents', 'user']);
+            return $school->fresh()->load('user');
         });
     }
 
     public function find(School $school): School
     {
-        return $school->load(['documents', 'user']);
+        return $school->load('user');
     }
 
     /**
@@ -66,11 +57,10 @@ class SchoolService
      */
     public function update(School $school, array $data): School
     {
-        $documents = array_key_exists('documents', $data) ? $data['documents'] : null;
         $password = $data['password'] ?? null;
-        unset($data['documents'], $data['password'], $data['password_confirmation']);
+        unset($data['password'], $data['password_confirmation']);
 
-        return DB::transaction(function () use ($school, $data, $documents, $password): School {
+        return DB::transaction(function () use ($school, $data, $password): School {
             if ($data !== []) {
                 $school->update($data);
             }
@@ -93,11 +83,7 @@ class SchoolService
                 $school->user?->update($userUpdates);
             }
 
-            if (is_array($documents)) {
-                $this->documentService->syncForSchool($school, $documents);
-            }
-
-            return $school->fresh()->load(['documents', 'user']);
+            return $school->fresh()->load('user');
         });
     }
 

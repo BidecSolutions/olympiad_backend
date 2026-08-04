@@ -29,6 +29,10 @@
             "value": "1"
         },
         {
+            "key": "school_document_id",
+            "value": "1"
+        },
+        {
             "key": "student_id",
             "value": "1"
         },
@@ -369,7 +373,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"ABC School\",\n    \"email\": \"school@example.com\",\n    \"password\": \"password\",\n    \"password_confirmation\": \"password\",\n    \"registration_no\": \"REG-123456\",\n    \"phone\": \"+923001234567\",\n    \"address\": \"123 Main Street\",\n    \"city\": \"Karachi\",\n    \"status\": \"pending\",\n    \"documents\": [\n        {\n            \"document_type\": \"cambridge_affiliation\",\n            \"file_path\": \"school-documents/cert.pdf\",\n            \"status\": \"pending\"\n        }\n    ]\n}"
+                            "raw": "{\n    \"name\": \"ABC School\",\n    \"email\": \"school@example.com\",\n    \"password\": \"password\",\n    \"password_confirmation\": \"password\",\n    \"registration_no\": \"REG-123456\",\n    \"phone\": \"+923001234567\",\n    \"address\": \"123 Main Street\",\n    \"city\": \"Karachi\",\n    \"status\": \"pending\"\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/schools",
@@ -438,7 +442,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"ABC School Updated\",\n    \"city\": \"Lahore\",\n    \"status\": \"approved\",\n    \"documents\": [\n        {\n            \"id\": 1,\n            \"document_type\": \"cambridge_affiliation\",\n            \"file_path\": \"school-documents/cert-v2.pdf\",\n            \"status\": \"approved\"\n        },\n        {\n            \"document_type\": \"matriculation_board\",\n            \"file_path\": \"school-documents/board.pdf\",\n            \"status\": \"pending\"\n        }\n    ]\n}"
+                            "raw": "{\n    \"name\": \"ABC School Updated\",\n    \"city\": \"Lahore\",\n    \"status\": \"approved\"\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/schools/{{school_id}}",
@@ -471,6 +475,166 @@
                             "path": [
                                 "schools",
                                 "{{school_id}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "School Document",
+            "item": [
+                {
+                    "name": "List School Documents",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/schools/{{school_id}}/documents",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "schools",
+                                "{{school_id}}",
+                                "documents"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create School Document",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"document_type\": \"cambridge_affiliation\",\n    \"file_path\": \"school-documents/cert.pdf\",\n    \"status\": \"pending\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/schools/{{school_id}}/documents",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "schools",
+                                "{{school_id}}",
+                                "documents"
+                            ]
+                        }
+                    },
+                    "response": [],
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "if (pm.response.code === 201) {",
+                                    "    const json = pm.response.json();",
+                                    "    if (json.data && json.data.id) {",
+                                    "        pm.collectionVariables.set('school_document_id', json.data.id);",
+                                    "    }",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Show School Document",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/schools/{{school_id}}/documents/{{school_document_id}}",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "schools",
+                                "{{school_id}}",
+                                "documents",
+                                "{{school_document_id}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update School Document",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"document_type\": \"matriculation_board\",\n    \"file_path\": \"school-documents/board.pdf\",\n    \"status\": \"approved\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/schools/{{school_id}}/documents/{{school_document_id}}",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "schools",
+                                "{{school_id}}",
+                                "documents",
+                                "{{school_document_id}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete School Document",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/schools/{{school_id}}/documents/{{school_document_id}}",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "schools",
+                                "{{school_id}}",
+                                "documents",
+                                "{{school_document_id}}"
                             ]
                         }
                     },

@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\CompetitionController;
 use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\OfficialController;
 use App\Http\Controllers\Api\SchoolController;
+use App\Http\Controllers\Api\SchoolDocumentController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\TeamController;
 use App\Http\Controllers\Api\TeamMemberController;
@@ -201,6 +202,26 @@ Route::middleware('auth:sanctum')
 
         Route::delete('/{school}', 'destroy')
             ->name('api.schools.destroy');
+
+        Route::prefix('{school}/documents')
+            ->controller(SchoolDocumentController::class)
+            ->group(function () {
+
+                Route::get('/', 'index')
+                    ->name('api.schools.documents.index');
+
+                Route::post('/', 'store')
+                    ->name('api.schools.documents.store');
+
+                Route::get('/{document}', 'show')
+                    ->name('api.schools.documents.show');
+
+                Route::patch('/{document}', 'update')
+                    ->name('api.schools.documents.patch');
+
+                Route::delete('/{document}', 'destroy')
+                    ->name('api.schools.documents.destroy');
+            });
 
         Route::prefix('{school}/students')
             ->controller(StudentController::class)
