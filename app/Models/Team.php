@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
     'school_id',
+    'competition_category_id',
     'name',
     'status',
 ])]
@@ -43,6 +44,14 @@ class Team extends Model
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);
+    }
+
+    /**
+     * @return BelongsTo<CompetitionCategory, $this>
+     */
+    public function competitionCategory(): BelongsTo
+    {
+        return $this->belongsTo(CompetitionCategory::class);
     }
 
     /**

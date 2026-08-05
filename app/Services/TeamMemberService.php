@@ -63,12 +63,18 @@ class TeamMemberService
         $memberIds = [];
 
         foreach ($members as $memberData) {
+            $attributes = ['student_id' => $memberData['student_id']];
+
+            if (array_key_exists('shirt_number', $memberData)) {
+                $attributes['shirt_number'] = $memberData['shirt_number'];
+            }
+
             if (! empty($memberData['id'])) {
                 $member = $team->members()->findOrFail($memberData['id']);
-                $member->update(['student_id' => $memberData['student_id']]);
+                $member->update($attributes);
                 $memberIds[] = $member->id;
             } else {
-                $member = $team->members()->create(['student_id' => $memberData['student_id']]);
+                $member = $team->members()->create($attributes);
                 $memberIds[] = $member->id;
             }
         }

@@ -15,9 +15,19 @@ return new class extends Migration
             $table->id();
             $table->foreignId('team_id')->constrained()->cascadeOnDelete();
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
+            $table->string('shirt_number')->nullable();
+
             $table->timestamps();
 
-            $table->unique(['team_id', 'student_id']);
+            $table->unique([
+                'team_id',
+                'student_id',
+            ]);
+
+            $table->unique([
+                'team_id',
+                'shirt_number',
+            ]);
         });
     }
 

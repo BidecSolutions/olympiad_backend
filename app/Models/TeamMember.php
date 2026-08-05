@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable([
     'team_id',
     'student_id',
+    'shirt_number',
 ])]
 class TeamMember extends Model
 {

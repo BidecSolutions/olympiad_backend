@@ -19,7 +19,7 @@ class TeamService
     public function list(School $school, int $perPage = 15): LengthAwarePaginator
     {
         return $school->teams()
-            ->with(['school', 'members.student'])
+            ->with(['school', 'competitionCategory', 'members.student'])
             ->latest()
             ->paginate($perPage);
     }
@@ -43,12 +43,12 @@ class TeamService
 
         $team = $school->teams()->create($data);
 
-        return $team->load(['school', 'members.student']);
+        return $team->load(['school', 'competitionCategory', 'members.student']);
     }
 
     public function find(Team $team): Team
     {
-        return $team->load(['school', 'members.student']);
+        return $team->load(['school', 'competitionCategory', 'members.student']);
     }
 
     /**
@@ -84,7 +84,7 @@ class TeamService
             $team->update($data);
         }
 
-        return $team->fresh()->load(['school', 'members.student']);
+        return $team->fresh()->load(['school', 'competitionCategory', 'members.student']);
     }
 
     public function delete(Team $team): void
@@ -112,6 +112,6 @@ class TeamService
             $this->memberService->syncForTeam($team, $members);
         }
 
-        return $team->fresh()->load(['school', 'members.student']);
+        return $team->fresh()->load(['school', 'competitionCategory', 'members.student']);
     }
 }

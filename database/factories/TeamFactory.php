@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\TeamStatusEnum;
+use App\Models\CompetitionCategory;
 use App\Models\School;
 use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -19,6 +20,7 @@ class TeamFactory extends Factory
     {
         return [
             'school_id' => School::factory(),
+            'competition_category_id' => CompetitionCategory::factory(),
             'name' => fake()->unique()->words(2, true),
             'status' => TeamStatusEnum::Active,
         ];

@@ -118,6 +118,14 @@ class TeamMemberController extends Controller
                     ->where('team_id', $team->id)
                     ->ignore($teamMemberId),
             ],
+            'shirt_number' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::unique('team_members', 'shirt_number')
+                    ->where('team_id', $team->id)
+                    ->ignore($teamMemberId),
+            ],
         ];
     }
 }

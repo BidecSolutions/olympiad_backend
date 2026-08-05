@@ -28,7 +28,7 @@ class TeamController extends Controller
 
     public function store(Request $request, School $school): JsonResponse
     {
-        $payloadData = $request->validate($this->teamPayloadRules($school));
+        $payloadData = $request->validate($this->teamPayloadRules($request, $school));
 
         $team = $this->teamService->create($school, $payloadData);
 
@@ -54,7 +54,7 @@ class TeamController extends Controller
     {
         $this->ensureTeamBelongsToSchool($school, $team);
 
-        $payloadData = $request->validate($this->teamPayloadRules($school, $team));
+        $payloadData = $request->validate($this->teamPayloadRules($request, $school, $team));
 
         $team = $this->teamService->update($team, $payloadData);
 
@@ -85,11 +85,21 @@ class TeamController extends Controller
     /**
      * @return array<string, list<mixed>>
      */
-    private function teamPayloadRules(School $school, ?Team $team = null): array
+    private function teamPayloadRules(Request $request, School $school, ?Team $team = null): array
     {
         $teamId = $team?->id;
+        $competitionCategoryId = $request->input(
+            'competition_category_id',
+            $team?->competition_category_id,
+        );
 
         return [
+            'competition_category_id' => [
+                $teamId ? 'sometimes' : 'required',
+                'required',
+                'integer',
+                Rule::exists('competition_categories', 'id'),
+            ],
             'name' => [
                 $teamId ? 'sometimes' : 'required',
                 'required',
@@ -97,6 +107,7 @@ class TeamController extends Controller
                 'max:255',
                 Rule::unique('teams', 'name')
                     ->where('school_id', $school->id)
+                    ->where('competition_category_id', $competitionCategoryId)
                     ->ignore($teamId),
             ],
             'status' => ['nullable', Rule::enum(TeamStatusEnum::class)],
@@ -116,6 +127,7 @@ class TeamController extends Controller
                 'distinct',
                 Rule::exists('students', 'id')->where('school_id', $school->id),
             ],
+            'members.*.shirt_number' => ['nullable', 'string', 'max:255', 'distinct'],
         ];
     }
 }
