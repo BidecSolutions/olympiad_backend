@@ -1,0 +1,55 @@
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: olympiad-backend-nginx
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${BACKEND_PORT}:80"
+    volumes:
+      - ./:/var/www:ro
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - php-fpm
+    networks:
+      - olympiad-backend
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: olympiad-backend-php-fpm
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./:/var/www
+      - olympiad_backend_vendor:/var/www/vendor
+    depends_on:
+      - mysql
+    networks:
+      - olympiad-backend
+
+  mysql:
+    image: mysql:8.4
+    container_name: olympiad-backend-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    ports:
+      - "127.0.0.1:${DB_HOST_PORT}:3306"
+    volumes:
+      - olympiad_backend_dbdata:/var/lib/mysql
+    networks:
+      - olympiad-backend
+
+networks:
+  olympiad-backend:
+    name: olympiad-backend-network
+
+volumes:
+  olympiad_backend_dbdata:
+    name: olympiad_backend_dbdata
+  olympiad_backend_vendor:
+    name: olympiad_backend_vendor
