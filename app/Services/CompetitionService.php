@@ -18,7 +18,7 @@ class CompetitionService
     public function list(int $perPage = 15): LengthAwarePaginator
     {
         return Competition::query()
-            ->with(['event', 'competitionCategories'])
+            ->with(['event', 'competitionCategories.rule'])
             ->latest()
             ->paginate($perPage);
     }

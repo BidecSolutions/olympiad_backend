@@ -75,6 +75,7 @@ class CompetitionCategoryService
                     'status' => $categoryData['status'] ?? $category->status,
                 ]);
                 $categoryIds[] = $category->id;
+                $this->syncCategoryRule($category, $categoryData['rule'] ?? null);
             } else {
                 $category = $competition->competitionCategories()->create([
                     'name' => $categoryData['name'],
@@ -83,6 +84,8 @@ class CompetitionCategoryService
                 ]);
                 $categoryIds[] = $category->id;
             }
+
+            $this->syncCategoryRule($category, $categoryData['rule'] ?? null);
         }
 
         if ($categoryIds === []) {
@@ -92,5 +95,25 @@ class CompetitionCategoryService
         }
 
         $competition->competitionCategories()->whereNotIn('id', $categoryIds)->delete();
+    }
+
+    /**
+     * @param  array<string, mixed>|null  $ruleData
+     */
+    private function syncCategoryRule(CompetitionCategory $category, ?array $ruleData): void
+    {
+        if (! is_array($ruleData)) {
+            return;
+        }
+
+        $category->rule()->updateOrCreate(
+            ['competition_category_id' => $category->id],
+            [
+                'max_teams' => $ruleData['max_teams'] ?? null,
+                'min_team_members' => $ruleData['min_team_members'] ?? null,
+                'max_team_members' => $ruleData['max_team_members'] ?? null,
+                'max_participants' => $ruleData['max_participants'] ?? null,
+            ],
+        );
     }
 }

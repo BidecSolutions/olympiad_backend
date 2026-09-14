@@ -11,13 +11,22 @@ class LoginRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        if (! $this->has('login') && $this->has('email')) {
+            $this->merge([
+                'login' => $this->input('email'),
+            ]);
+        }
+    }
+
     /**
      * @return array<string, list<string>>
      */
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'login' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }

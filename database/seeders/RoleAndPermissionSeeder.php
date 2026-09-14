@@ -50,6 +50,13 @@ class RoleAndPermissionSeeder extends Seeder
                 'Edit' => PermissionsEnum::OfficialsPatch,
                 'Delete' => PermissionsEnum::OfficialsDestroy,
             ],
+            'Sub Admins' => [
+                'List' => PermissionsEnum::SubAdminsList,
+                'Create' => PermissionsEnum::SubAdminsStore,
+                'View' => PermissionsEnum::SubAdminsShow,
+                'Edit' => PermissionsEnum::SubAdminsPatch,
+                'Delete' => PermissionsEnum::SubAdminsDestroy,
+            ],
             'Competitions' => [
                 'List' => PermissionsEnum::CompetitionsList,
                 'Create' => PermissionsEnum::CompetitionsStore,

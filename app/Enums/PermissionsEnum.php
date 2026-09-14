@@ -68,4 +68,11 @@ enum PermissionsEnum: string
     case OfficialsShow = 'officials.show';
     case OfficialsPatch = 'officials.patch';
     case OfficialsDestroy = 'officials.destroy';
+
+    // Sub Admins
+    case SubAdminsList = 'sub-admins.list';
+    case SubAdminsStore = 'sub-admins.store';
+    case SubAdminsShow = 'sub-admins.show';
+    case SubAdminsPatch = 'sub-admins.patch';
+    case SubAdminsDestroy = 'sub-admins.destroy';
 }

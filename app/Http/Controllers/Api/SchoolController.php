@@ -26,15 +26,15 @@ class SchoolController extends Controller
         ]);
     }
 
-    public function store(Request $request): JsonResponse
+    public function register(Request $request): JsonResponse
     {
-        $payloadData = $request->validate($this->schoolPayloadRules());
+        $payloadData = $request->validate($this->schoolRegistrationRules());
 
-        $school = $this->schoolService->create($payloadData);
+        $school = $this->schoolService->register($payloadData);
 
         return response()->json([
             'status' => true,
-            'message' => 'School registered successfully.',
+            'message' => 'Registration submitted. Super Admin will review your application.',
             'data' => $school,
         ], 201);
     }
@@ -50,6 +50,11 @@ class SchoolController extends Controller
 
     public function update(Request $request, School $school): JsonResponse
     {
+        $user = $request->user();
+        if ($user?->school && $user->school->id !== $school->id) {
+            abort(403, 'You can only update your own school profile.');
+        }
+
         $payloadData = $request->validate($this->schoolPayloadRules($school));
 
         $school = $this->schoolService->update($school, $payloadData);
@@ -116,7 +121,32 @@ class SchoolController extends Controller
             'phone' => ['nullable', 'string', 'max:255'],
             'address' => ['nullable', 'string'],
             'city' => ['nullable', 'string', 'max:255'],
+            'contact_name' => ['nullable', 'string', 'max:255'],
             'status' => ['nullable', Rule::enum(SchoolStatusEnum::class)],
+        ];
+    }
+
+    /**
+     * @return array<string, list<mixed>>
+     */
+    private function schoolRegistrationRules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'contact_name' => ['required', 'string', 'max:255'],
+            'registration_no' => ['nullable', 'string', 'max:255'],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('schools', 'email'),
+                Rule::unique('users', 'email'),
+            ],
+            'password' => ['required', 'string', 'confirmed', Password::defaults()],
+            'phone' => ['nullable', 'string', 'max:255'],
+            'address' => ['nullable', 'string'],
+            'city' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

@@ -12,6 +12,8 @@ use App\Http\Controllers\Api\OfficialController;
 use App\Http\Controllers\Api\SchoolController;
 use App\Http\Controllers\Api\SchoolDocumentController;
 use App\Http\Controllers\Api\StudentController;
+use App\Http\Controllers\Api\StudentRegistrationController;
+use App\Http\Controllers\Api\SubAdminController;
 use App\Http\Controllers\Api\TeamController;
 use App\Http\Controllers\Api\TeamMemberController;
 use Illuminate\Support\Facades\Route;
@@ -87,6 +89,30 @@ Route::middleware('auth:sanctum')
     });
 
 // ========================================
+// [ Sub Admin ]
+// ========================================
+Route::middleware('auth:sanctum')
+    ->prefix('sub-admins')
+    ->controller(SubAdminController::class)
+    ->group(function () {
+
+        Route::get('/', 'index')
+            ->name('api.sub-admins.index');
+
+        Route::post('/', 'store')
+            ->name('api.sub-admins.store');
+
+        Route::get('/{subAdmin}', 'show')
+            ->name('api.sub-admins.show');
+
+        Route::patch('/{subAdmin}', 'update')
+            ->name('api.sub-admins.patch');
+
+        Route::delete('/{subAdmin}', 'destroy')
+            ->name('api.sub-admins.destroy');
+    });
+
+// ========================================
 // [ Official ]
 // ========================================
 Route::middleware('auth:sanctum')
@@ -155,12 +181,14 @@ Route::middleware('auth:sanctum')
     });
 
 // ========================================
+// [ School — public registration ]
+// ========================================
+Route::post('/schools/register', [SchoolController::class, 'register'])
+    ->name('api.schools.register');
+
+// ========================================
 // [ School ]
 // ========================================
-Route::post('/schools', [SchoolController::class, 'store'])
-    ->middleware('guest:sanctum')
-    ->name('api.schools.store');
-
 Route::middleware('auth:sanctum')
     ->prefix('schools')
     ->controller(SchoolController::class)
@@ -216,6 +244,20 @@ Route::middleware('auth:sanctum')
 
                 Route::delete('/{student}', 'destroy')
                     ->name('api.schools.students.destroy');
+            });
+
+        Route::prefix('{school}/registrations')
+            ->controller(StudentRegistrationController::class)
+            ->group(function () {
+
+                Route::get('/', 'index')
+                    ->name('api.schools.registrations.index');
+
+                Route::post('/', 'store')
+                    ->name('api.schools.registrations.store');
+
+                Route::get('/{registration}', 'show')
+                    ->name('api.schools.registrations.show');
             });
 
         Route::prefix('{school}/teams')

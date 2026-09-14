@@ -63,4 +63,12 @@ class Student extends Model
     {
         return $this->hasMany(TeamMember::class);
     }
+
+    /**
+     * @return HasMany<StudentRegistration, $this>
+     */
+    public function studentRegistrations(): HasMany
+    {
+        return $this->hasMany(StudentRegistration::class);
+    }
 }

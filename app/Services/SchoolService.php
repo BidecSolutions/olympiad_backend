@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\RolesEnum;
+use App\Enums\SchoolStatusEnum;
 use App\Models\School;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -27,11 +28,12 @@ class SchoolService
     public function create(array $data): School
     {
         $password = $data['password'];
-        unset($data['password'], $data['password_confirmation']);
+        $contactName = $data['contact_name'] ?? $data['name'];
+        unset($data['password'], $data['password_confirmation'], $data['contact_name']);
 
-        return DB::transaction(function () use ($data, $password): School {
+        return DB::transaction(function () use ($data, $password, $contactName): School {
             $user = User::query()->create([
-                'name' => $data['name'],
+                'name' => $contactName,
                 'email' => $data['email'],
                 'password' => $password,
             ]);
@@ -41,10 +43,21 @@ class SchoolService
             $school = School::query()->create([
                 ...$data,
                 'user_id' => $user->id,
+                'status' => $data['status'] ?? SchoolStatusEnum::Pending->value,
             ]);
 
             return $school->fresh()->load('user');
         });
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public function register(array $data): School
+    {
+        $data['status'] = SchoolStatusEnum::Pending->value;
+
+        return $this->create($data);
     }
 
     public function find(School $school): School
@@ -58,17 +71,18 @@ class SchoolService
     public function update(School $school, array $data): School
     {
         $password = $data['password'] ?? null;
-        unset($data['password'], $data['password_confirmation']);
+        $contactName = $data['contact_name'] ?? null;
+        unset($data['password'], $data['password_confirmation'], $data['contact_name']);
 
-        return DB::transaction(function () use ($school, $data, $password): School {
+        return DB::transaction(function () use ($school, $data, $password, $contactName): School {
             if ($data !== []) {
                 $school->update($data);
             }
 
             $userUpdates = [];
 
-            if (array_key_exists('name', $data)) {
-                $userUpdates['name'] = $data['name'];
+            if (is_string($contactName) && $contactName !== '') {
+                $userUpdates['name'] = $contactName;
             }
 
             if (array_key_exists('email', $data)) {

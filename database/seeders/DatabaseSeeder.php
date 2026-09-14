@@ -25,6 +25,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleAndPermissionSeeder::class,
             SuperAdminSeeder::class,
+            SubAdminSeeder::class,
+            EventSeeder::class,
+            CompetitionSeeder::class,
+            SchoolDemoDataSeeder::class,
         ]);
     }
 }

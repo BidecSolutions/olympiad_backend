@@ -105,6 +105,11 @@ class CompetitionController extends Controller
             'competition_categories.*.name' => ['required', 'string', 'max:255'],
             'competition_categories.*.participation_type' => ['nullable', Rule::enum(ParticipationTypeEnum::class)],
             'competition_categories.*.status' => ['nullable', Rule::enum(CompetitionCategoryStatusEnum::class)],
+            'competition_categories.*.rule' => ['nullable', 'array'],
+            'competition_categories.*.rule.max_teams' => ['nullable', 'integer', 'min:1'],
+            'competition_categories.*.rule.min_team_members' => ['nullable', 'integer', 'min:1'],
+            'competition_categories.*.rule.max_team_members' => ['nullable', 'integer', 'min:1'],
+            'competition_categories.*.rule.max_participants' => ['nullable', 'integer', 'min:1'],
         ];
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\RolesEnum;
+use App\Enums\SchoolStatusEnum;
 use App\Models\School;
 use App\Models\User;
 use Database\Seeders\RoleAndPermissionSeeder;
@@ -8,11 +9,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('registers a school by creating a user and linking user_id', function () {
+it('registers a school publicly with pending status', function () {
     $this->seed(RoleAndPermissionSeeder::class);
 
-    $response = $this->postJson('/api/schools', [
+    $response = $this->postJson('/api/schools/register', [
         'name' => 'ABC School',
+        'contact_name' => 'John Principal',
         'email' => 'school@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',
@@ -24,6 +26,7 @@ it('registers a school by creating a user and linking user_id', function () {
         ->assertJsonPath('status', true)
         ->assertJsonPath('data.name', 'ABC School')
         ->assertJsonPath('data.email', 'school@example.com')
+        ->assertJsonPath('data.status', SchoolStatusEnum::Pending->value)
         ->assertJsonPath('data.user.email', 'school@example.com');
 
     $school = School::query()->first();
@@ -35,30 +38,64 @@ it('registers a school by creating a user and linking user_id', function () {
         ->and($user->hasRole(RolesEnum::SchoolAdmin))->toBeTrue();
 });
 
-it('allows the registered school user to login', function () {
+it('blocks login until the school is approved', function () {
     $this->seed(RoleAndPermissionSeeder::class);
 
-    $this->postJson('/api/schools', [
+    $this->postJson('/api/schools/register', [
         'name' => 'ABC School',
+        'contact_name' => 'John Principal',
         'email' => 'school@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',
     ])->assertCreated();
 
     $this->postJson('/api/auth/login', [
+        'login' => '1',
+        'password' => 'password',
+    ])->assertUnauthorized();
+});
+
+it('allows the approved school user to login', function () {
+    $this->seed(RoleAndPermissionSeeder::class);
+
+    $this->postJson('/api/schools/register', [
+        'name' => 'ABC School',
+        'contact_name' => 'John Principal',
         'email' => 'school@example.com',
+        'password' => 'password',
+        'password_confirmation' => 'password',
+    ])->assertCreated();
+
+    $school = School::query()->first();
+    $school->update(['status' => SchoolStatusEnum::Approved]);
+
+    $this->postJson('/api/auth/login', [
+        'login' => (string) $school->id,
         'password' => 'password',
     ])
         ->assertSuccessful()
-        ->assertJsonPath('user.email', 'school@example.com')
+        ->assertJsonPath('user.login_id', $school->id)
         ->assertJsonPath('user.roles', [RolesEnum::SchoolAdmin->value]);
 });
 
 it('requires password confirmation when registering a school', function () {
-    $this->postJson('/api/schools', [
+    $this->postJson('/api/schools/register', [
         'name' => 'ABC School',
+        'contact_name' => 'John Principal',
         'email' => 'school@example.com',
         'password' => 'password',
     ])->assertUnprocessable()
         ->assertJsonValidationErrors(['password']);
+});
+
+it('does not require authentication to register a school', function () {
+    $this->seed(RoleAndPermissionSeeder::class);
+
+    $this->postJson('/api/schools/register', [
+        'name' => 'ABC School',
+        'contact_name' => 'John Principal',
+        'email' => 'school@example.com',
+        'password' => 'password',
+        'password_confirmation' => 'password',
+    ])->assertCreated();
 });

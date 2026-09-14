@@ -39,19 +39,30 @@ class User extends Authenticatable
     }
 
     /**
-     * @return array{id: int, name: string, email: string, roles: list<string>, permissions: list<string>}
+     * @return array{id: int, name: string, email: string, roles: list<string>, permissions: list<string>, login_id?: int, school_name?: string}
      */
     public function toAuthArray(): array
     {
-        $this->loadMissing(['roles', 'permissions', 'roles.permissions']);
+        $this->loadMissing(['roles', 'permissions', 'roles.permissions', 'school', 'subAdmin']);
 
-        return [
+        $payload = [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'roles' => $this->getRoleNames()->values()->all(),
             'permissions' => $this->getAllPermissions()->pluck('name')->values()->all(),
         ];
+
+        if ($this->school) {
+            $payload['school_name'] = $this->school->name;
+            $payload['login_id'] = $this->school->id;
+        }
+
+        if ($this->subAdmin) {
+            $payload['login_id'] = $this->subAdmin->id;
+        }
+
+        return $payload;
     }
 
     /**
@@ -76,5 +87,13 @@ class User extends Authenticatable
     public function official(): HasOne
     {
         return $this->hasOne(Official::class);
+    }
+
+    /**
+     * @return HasOne<SubAdmin, $this>
+     */
+    public function subAdmin(): HasOne
+    {
+        return $this->hasOne(SubAdmin::class);
     }
 }
