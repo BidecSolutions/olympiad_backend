@@ -38,7 +38,7 @@ it('registers a school publicly with pending status', function () {
         ->and($user->hasRole(RolesEnum::SchoolAdmin))->toBeTrue();
 });
 
-it('blocks login until the school is approved', function () {
+it('returns pending school status on login before approval', function () {
     $this->seed(RoleAndPermissionSeeder::class);
 
     $this->postJson('/api/schools/register', [
@@ -52,7 +52,11 @@ it('blocks login until the school is approved', function () {
     $this->postJson('/api/auth/login', [
         'login' => '1',
         'password' => 'password',
-    ])->assertUnauthorized();
+    ])
+        ->assertSuccessful()
+        ->assertJsonPath('login_state', 'school_pending')
+        ->assertJsonPath('data.status', SchoolStatusEnum::Pending->value)
+        ->assertJsonMissing(['token']);
 });
 
 it('allows the approved school user to login', function () {
@@ -74,6 +78,8 @@ it('allows the approved school user to login', function () {
         'password' => 'password',
     ])
         ->assertSuccessful()
+        ->assertJsonPath('login_state', 'school_approved')
+        ->assertJsonPath('data.status', SchoolStatusEnum::Approved->value)
         ->assertJsonPath('user.login_id', $school->id)
         ->assertJsonPath('user.roles', [RolesEnum::SchoolAdmin->value]);
 });

@@ -29,7 +29,12 @@ class LoginController extends Controller
             ]);
         }
 
-        $this->assertAccountIsActive($user);
+        $school = $user->school;
+        if ($school !== null) {
+            return $this->loginSchoolUser($user, $school);
+        }
+
+        $this->assertSubAdminIsActive($user);
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -67,15 +72,59 @@ class LoginController extends Controller
     /**
      * @throws ValidationException
      */
-    private function assertAccountIsActive(User $user): void
+    private function loginSchoolUser(User $user, School $school): JsonResponse
     {
-        $school = $user->school;
-        if ($school && $school->status !== SchoolStatusEnum::Approved) {
+        if (in_array($school->status, [SchoolStatusEnum::Rejected, SchoolStatusEnum::Blacklisted], true)) {
             throw ValidationException::withMessages([
                 'login' => ['This school account is not approved yet.'],
             ]);
         }
 
+        if ($school->status === SchoolStatusEnum::Pending) {
+            return response()->json([
+                'status' => true,
+                'message' => 'School registration is under review.',
+                'login_state' => 'school_pending',
+                'data' => $this->formatSchoolStatus($school),
+            ]);
+        }
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Login successful.',
+            'login_state' => 'school_approved',
+            'token' => $token,
+            'token_type' => 'Bearer',
+            'user' => $user->toAuthArray(),
+            'data' => $this->formatSchoolStatus($school),
+        ], 200);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function formatSchoolStatus(School $school): array
+    {
+        return [
+            'id' => $school->id,
+            'application_id' => sprintf('APP-%d-%06d', now()->year, $school->id),
+            'school_id' => $school->school_code ?? sprintf('SCH-%d-%04d', now()->year, $school->id),
+            'name' => $school->name,
+            'email' => $school->email,
+            'status' => $school->status->value,
+            'requested_quota' => $school->requested_quota,
+            'approved_quota' => $school->approved_quota ?? $school->requested_quota,
+            'submitted_at' => $school->created_at?->toIso8601String(),
+        ];
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    private function assertSubAdminIsActive(User $user): void
+    {
         $subAdmin = $user->subAdmin;
         if ($subAdmin && $subAdmin->status !== SubAdminStatusEnum::Active) {
             throw ValidationException::withMessages([
