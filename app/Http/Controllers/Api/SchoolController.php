@@ -39,6 +39,41 @@ class SchoolController extends Controller
         ], 201);
     }
 
+    public function registrationStatus(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'email' => ['required', 'string', 'email'],
+        ]);
+
+        $school = School::query()
+            ->with('user')
+            ->where('email', $validated['email'])
+            ->first();
+
+        if ($school === null) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No registration found for this email.',
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Registration status retrieved successfully.',
+            'data' => [
+                'id' => $school->id,
+                'application_id' => sprintf('APP-%d-%06d', now()->year, $school->id),
+                'school_id' => $school->school_code ?? sprintf('SCH-%d-%04d', now()->year, $school->id),
+                'name' => $school->name,
+                'email' => $school->email,
+                'status' => $school->status->value,
+                'requested_quota' => $school->requested_quota,
+                'approved_quota' => $school->approved_quota ?? $school->requested_quota,
+                'submitted_at' => $school->created_at?->toIso8601String(),
+            ],
+        ]);
+    }
+
     public function show(School $school): JsonResponse
     {
         return response()->json([
@@ -122,6 +157,19 @@ class SchoolController extends Controller
             'address' => ['nullable', 'string'],
             'city' => ['nullable', 'string', 'max:255'],
             'contact_name' => ['nullable', 'string', 'max:255'],
+            'school_type' => ['nullable', 'string', 'max:255'],
+            'establishment_year' => ['nullable', 'integer', 'min:1800', 'max:'.(int) date('Y')],
+            'website' => ['nullable', 'string', 'max:255'],
+            'about' => ['nullable', 'string'],
+            'contact_designation' => ['nullable', 'string', 'max:255'],
+            'alternate_phone' => ['nullable', 'string', 'max:255'],
+            'state' => ['nullable', 'string', 'max:255'],
+            'country' => ['nullable', 'string', 'max:255'],
+            'postal_code' => ['nullable', 'string', 'max:255'],
+            'requested_quota' => ['nullable', 'integer', 'min:1'],
+            'approved_quota' => ['nullable', 'integer', 'min:1'],
+            'interested_competitions' => ['nullable', 'array'],
+            'interested_competitions.*' => ['string', 'max:255'],
             'status' => ['nullable', Rule::enum(SchoolStatusEnum::class)],
         ];
     }
@@ -135,6 +183,10 @@ class SchoolController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'contact_name' => ['required', 'string', 'max:255'],
             'registration_no' => ['nullable', 'string', 'max:255'],
+            'school_type' => ['nullable', 'string', 'max:255'],
+            'establishment_year' => ['nullable', 'integer', 'min:1800', 'max:'.(int) date('Y')],
+            'website' => ['nullable', 'string', 'max:255'],
+            'about' => ['nullable', 'string'],
             'email' => [
                 'required',
                 'string',
@@ -145,8 +197,23 @@ class SchoolController extends Controller
             ],
             'password' => ['required', 'string', 'confirmed', Password::defaults()],
             'phone' => ['nullable', 'string', 'max:255'],
+            'alternate_phone' => ['nullable', 'string', 'max:255'],
             'address' => ['nullable', 'string'],
             'city' => ['nullable', 'string', 'max:255'],
+            'state' => ['nullable', 'string', 'max:255'],
+            'country' => ['nullable', 'string', 'max:255'],
+            'postal_code' => ['nullable', 'string', 'max:255'],
+            'contact_designation' => ['nullable', 'string', 'max:255'],
+            'requested_quota' => ['nullable', 'integer', 'min:1'],
+            'interested_competitions' => ['nullable', 'array'],
+            'interested_competitions.*' => ['string', 'max:255'],
+            'documents' => ['nullable', 'array'],
+            'documents.*.document_type' => [
+                'required',
+                'string',
+                Rule::enum(\App\Enums\SchoolDocumentTypeEnum::class),
+            ],
+            'documents.*.file_path' => ['required', 'string', 'max:255'],
         ];
     }
 }

@@ -185,6 +185,8 @@ Route::middleware('auth:sanctum')
 // ========================================
 Route::post('/schools/register', [SchoolController::class, 'register'])
     ->name('api.schools.register');
+Route::get('/schools/register/status', [SchoolController::class, 'registrationStatus'])
+    ->name('api.schools.register.status');
 
 // ========================================
 // [ School ]

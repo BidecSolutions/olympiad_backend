@@ -57,7 +57,19 @@ class SchoolService
     {
         $data['status'] = SchoolStatusEnum::Pending->value;
 
-        return $this->create($data);
+        $documents = $data['documents'] ?? [];
+        unset($data['documents']);
+
+        $school = $this->create($data);
+
+        foreach ($documents as $document) {
+            $school->documents()->create([
+                'document_type' => $document['document_type'],
+                'file_path' => $document['file_path'],
+            ]);
+        }
+
+        return $school->fresh()->load(['user', 'documents']);
     }
 
     public function find(School $school): School

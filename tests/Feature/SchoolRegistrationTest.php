@@ -99,3 +99,22 @@ it('does not require authentication to register a school', function () {
         'password_confirmation' => 'password',
     ])->assertCreated();
 });
+
+it('returns registration status by email', function () {
+    $this->seed(RoleAndPermissionSeeder::class);
+
+    $this->postJson('/api/schools/register', [
+        'name' => 'ABC School',
+        'contact_name' => 'John Principal',
+        'email' => 'school@example.com',
+        'password' => 'password',
+        'password_confirmation' => 'password',
+        'requested_quota' => 50,
+    ])->assertCreated();
+
+    $this->getJson('/api/schools/register/status?email=school@example.com')
+        ->assertSuccessful()
+        ->assertJsonPath('data.email', 'school@example.com')
+        ->assertJsonPath('data.status', SchoolStatusEnum::Pending->value)
+        ->assertJsonPath('data.requested_quota', 50);
+});

@@ -15,10 +15,22 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'school_code',
     'name',
     'registration_no',
+    'school_type',
+    'establishment_year',
+    'website',
+    'about',
     'email',
     'phone',
+    'alternate_phone',
     'address',
     'city',
+    'state',
+    'country',
+    'postal_code',
+    'contact_designation',
+    'requested_quota',
+    'approved_quota',
+    'interested_competitions',
     'status',
 ])]
 class School extends Model
@@ -40,6 +52,10 @@ class School extends Model
     {
         return [
             'status' => SchoolStatusEnum::class,
+            'establishment_year' => 'integer',
+            'requested_quota' => 'integer',
+            'approved_quota' => 'integer',
+            'interested_competitions' => 'array',
         ];
     }
 
